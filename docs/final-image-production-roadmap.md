@@ -609,3 +609,13 @@ single-post hero). Post-hero rule: subject **x 35–65 %, y 15–50 %**, bottom 
 * post-1 … post-6: 1800 × 1200 → **2880 × 1920**
 
 Applied to `demo/images.json` and `image-roadmap.md`; registry and both roadmaps agree.
+
+---
+
+## Post-import photo follow-ups
+
+1. **`ens-about-hero.jpg` and `ens-contact-hero.jpg`**
+   * Retouch or alternate crop for tablet/desktop so the facade MAISON ÉLISE lettering does not visually duplicate the global header wordmark.
+   * Preserve the same facade, lighting, architecture and branding.
+2. **`ens-home-hero.jpg`**
+   * Produce a dedicated portrait/mobile-safe variant or retouch so at 390px the nails sit clearly away from the hero paragraph and CTA while preserving the same hand, nail look N1, S2 station, lighting and campaign identity.
