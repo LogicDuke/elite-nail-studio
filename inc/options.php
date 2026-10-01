@@ -97,6 +97,33 @@ function ens_library_template( $slug ) {
 	return $tpl ? \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $tpl->ID, true ) : '';
 }
 
+/**
+ * `sizes` for full-bleed cover images. On tall viewports a cover crop paints the image wider than
+ * the screen (box height × image aspect), so "100vw" makes the browser pick a far-too-small file.
+ * $vh / $min_px describe the painted box height (incl. headroom for content growth / parallax).
+ * The leading media condition lets browsers without max() support skip to the plain 100vw entry.
+ */
+function ens_cover_sizes( $attachment_id, $vh, $min_px ) {
+	$m = wp_get_attachment_metadata( $attachment_id );
+	if ( empty( $m['width'] ) || empty( $m['height'] ) ) {
+		return '100vw';
+	}
+	$a = $m['width'] / $m['height'];
+	return sprintf( '(min-width: 1px) max(100vw, %.0fvh, %.0fpx), 100vw', $a * $vh, $a * $min_px );
+}
+
+/**
+ * Core prefixes lazy images' sizes with "auto" (layout width), which would override the cover-crop
+ * hint above. Images marked `ens-cover` keep their explicit sizes, at render and in the content pass.
+ */
+add_filter( 'wp_get_attachment_image_attributes', function ( $attr ) {
+	if ( str_contains( $attr['class'] ?? '', 'ens-cover' ) && isset( $attr['sizes'] ) ) {
+		$attr['sizes'] = preg_replace( '/^auto,\s*/', '', $attr['sizes'] );
+	}
+	return $attr;
+} );
+add_filter( 'wp_content_img_tag', fn( $img ) => str_contains( $img, 'ens-cover' ) ? str_replace( 'sizes="auto, ', 'sizes="', $img ) : $img );
+
 /** Multi-line option → `<br>`-joined escaped HTML. */
 function ens_lines( $text ) {
 	return implode( '<br>', array_map( 'esc_html', preg_split( '/\R/', trim( $text ) ) ) );

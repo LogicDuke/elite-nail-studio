@@ -390,6 +390,7 @@ class ENS_Seed {
 	private function cta( $title = 'Reserve your <em>chair</em>', $eyebrow = 'Your hour of calm', $text = 'Appointments open four weeks ahead. Same-week openings are released every Monday morning.' ) {
 		return $this->sec( [ $this->w( 'ens-cta', [
 			'image'   => $this->media( 'cta-band' ),
+			'focus'   => '0% 50%',
 			'eyebrow' => $eyebrow,
 			'title'   => $title,
 			'text'    => $text,
@@ -399,16 +400,18 @@ class ENS_Seed {
 		] ) ], 'ens-flush', [ 'content_width' => 'full' ] );
 	}
 
-	private function page_hero( $slot, $eyebrow, $title, $text = '' ) {
+	private function page_hero( $slot, $eyebrow, $title, $text = '', $focus = '', $classes = '' ) {
 		return $this->sec( [ $this->w( 'ens-hero', [
 			'layout'  => 'page',
+			'focus'   => $focus,
+			'focus_tablet' => $focus ? '0% 50%' : '',
 			'image'   => $this->media( $slot ),
 			'eyebrow' => $eyebrow,
 			'title'   => $title,
 			'text'    => $text,
 			'btn1'    => '',
 			'badge'   => '',
-		] ) ], 'ens-flush', [ 'content_width' => 'full' ] );
+		] ) ], trim( 'ens-flush ' . $classes ), [ 'content_width' => 'full' ] );
 	}
 
 	private function faq_items( array $rows ) {
@@ -432,6 +435,7 @@ class ENS_Seed {
 				'image'      => $this->media( 'home-hero' ),
 				'inset'      => $this->media( 'home-hero-detail' ),
 				'focus'      => '62% 50%',
+				'focus_tablet' => '45% 50%',
 				'eyebrow'    => 'Maison Élise — Luxury Nail Atelier',
 				'title'      => "The art\nof <em>perfect</em>\nnails",
 				'text'       => 'An appointment-only atelier for manicure, gel couture and nail art — unhurried, meticulous and entirely yours.',
@@ -546,7 +550,7 @@ class ENS_Seed {
 		$this->page = 'about';
 		$this->n    = 0;
 		return [
-			$this->page_hero( 'about-hero', 'Our story', 'An atelier built on <em>patience</em>', 'Founded in 2014 by Élise Marchand with one chair, one lamp and a stubborn belief that a manicure should never be rushed.' ),
+			$this->page_hero( 'about-hero', 'Our story', 'An atelier built on <em>patience</em>', 'Founded in 2014 by Élise Marchand with one chair, one lamp and a stubborn belief that a manicure should never be rushed.', '12% 50%' ),
 			$this->sec( [ $this->w( 'ens-feature', [
 				'image'   => $this->media( 'about-studio' ),
 				'image2'  => $this->media( 'about-detail' ),
@@ -672,7 +676,7 @@ class ENS_Seed {
 		$this->n    = 0;
 		$list       = fn( $title, $note, $rows ) => $this->w( 'ens-price-list', [ 'title' => $title, 'note' => $note, 'items' => $this->price_items( $rows ) ] );
 		return [
-			$this->page_hero( 'pricing-hero', 'Menu', 'Considered prices, <em>clearly</em> shown', 'Everything is included: consultation, removal of previous lacquer and a cuticle oil to take home.' ),
+			$this->page_hero( 'pricing-hero', 'Menu', 'Considered prices, <em>clearly</em> shown', 'Everything is included: consultation, removal of previous lacquer and a cuticle oil to take home.', '', 'ens-hero-calm' ),
 			$this->grid( [
 				$this->col( [
 					$list( 'Manicure', 'Lacquer finishes on natural nails.', [ [ 'Signature Manicure', 'Shape, cuticle care, lacquer, massage', '50 min', '$55', 'Signature' ], [ 'Express Manicure', 'Shape, tidy and polish', '30 min', '$38' ], [ 'French Manicure', 'Hand-painted smile line', '60 min', '$65' ], [ 'Gentleman’s Grooming', 'Shape, buff, matte finish', '30 min', '$40' ] ] ),
@@ -753,7 +757,7 @@ class ENS_Seed {
 		$hours      = implode( '<br>', array_map( 'esc_html', explode( "\n", ens_defaults()['ens_hours'] ) ) );
 		$address    = implode( '<br>', array_map( 'esc_html', explode( "\n", ens_defaults()['ens_address'] ) ) );
 		return [
-			$this->page_hero( 'booking-hero', 'Book', 'Reserve your <em>hour</em>', 'Send a request and we will confirm by phone or email within one working day.' ),
+			$this->page_hero( 'booking-hero', 'Book', 'Reserve your <em>hour</em>', 'Send a request and we will confirm by phone or email within one working day.', '', 'ens-hero-calm' ),
 			$this->grid( [
 				$this->col( [
 					$this->eyebrow( 'Appointments' ),
@@ -830,7 +834,7 @@ class ENS_Seed {
 		$d          = ens_defaults();
 		$lines      = fn( $s ) => implode( '<br>', array_map( 'esc_html', explode( "\n", $s ) ) );
 		return [
-			$this->page_hero( 'contact-hero', 'Contact', 'Come and <em>visit</em>', 'Find us in the old arcade, behind the ivory awning. Coffee is always on.' ),
+			$this->page_hero( 'contact-hero', 'Contact', 'Come and <em>visit</em>', 'Find us in the old arcade, behind the ivory awning. Coffee is always on.', '12% 50%' ),
 			$this->grid( [
 				$this->col( [
 					$this->w( 'image', [ 'image' => $this->media( 'contact-side' ), 'image_size' => 'large' ], 'ens-mask' ),

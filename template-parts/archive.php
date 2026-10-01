@@ -13,7 +13,7 @@ $current    = is_category() ? get_queried_object_id() : 0;
 ?>
 <section class="ens-hero ens-hero--page">
 	<div class="ens-hero__media">
-		<?php echo wp_get_attachment_image( ens_journal_hero_id(), 'full', false, [ 'class' => 'ens-hero__img', 'sizes' => '100vw', 'fetchpriority' => 'high' ] ); ?>
+		<?php echo wp_get_attachment_image( ens_journal_hero_id(), 'full', false, [ 'class' => 'ens-hero__img', 'sizes' => ens_cover_sizes( ens_journal_hero_id(), 70, 520 ), 'fetchpriority' => 'high' ] ); ?>
 	</div>
 	<div class="ens-hero__inner">
 		<p class="ens-eyebrow ens-reveal"><?php esc_html_e( 'The Journal', 'elite-nail-studio' ); ?></p>

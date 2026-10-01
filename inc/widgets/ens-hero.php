@@ -24,7 +24,8 @@ class ENS_Hero extends ENS_Widget {
 			'split' => __( 'Split — image right', 'elite-nail-studio' ),
 		] );
 		$this->field( 'image', __( 'Image', 'elite-nail-studio' ), 'media' );
-		$this->field( 'focus', __( 'Mobile focal point (CSS object-position)', 'elite-nail-studio' ), 'text', '60% 50%' );
+		$this->field( 'focus', __( 'Mobile focal point ≤767px (CSS object-position, e.g. 40% 50%)', 'elite-nail-studio' ), 'text', '' );
+		$this->field( 'focus_tablet', __( 'Tablet focal point 768–1024px (empty = mobile value)', 'elite-nail-studio' ), 'text', '' );
 		$this->field( 'eyebrow', __( 'Eyebrow', 'elite-nail-studio' ), 'text', __( 'Maison Élise — Luxury Nail Atelier', 'elite-nail-studio' ) );
 		$this->field( 'title', __( 'Title — one line per row, <em> for italic', 'elite-nail-studio' ), 'textarea', "The art\nof <em>perfect</em>\nnails" );
 		$this->field( 'text', __( 'Text', 'elite-nail-studio' ), 'textarea', '' );
@@ -48,11 +49,15 @@ class ENS_Hero extends ENS_Widget {
 		$layout = $s['layout'];
 		$is_h1  = 'home' === $layout ? 'ens-hero__title ens-hero__title--display' : 'ens-hero__title';
 		$lines  = array_filter( array_map( 'trim', preg_split( '/\R/', $s['title'] ) ) );
-		$style  = $s['focus'] ? ' style="--ens-focus:' . esc_attr( $s['focus'] ) . '"' : '';
+		$vars   = array_filter( [ '--ens-focus' => $s['focus'], '--ens-focus-tablet' => $s['focus_tablet'] ] );
+		$style  = $vars ? ' style="' . esc_attr( implode( ';', array_map( fn( $k, $v ) => "$k:$v", array_keys( $vars ), $vars ) ) ) . '"' : '';
 		?>
 		<section class="ens-hero ens-hero--<?php echo esc_attr( $layout ); ?>"<?php echo $style; // phpcs:ignore ?>>
 			<div class="ens-hero__media<?php echo 'split' === $layout ? ' ens-mask' : ''; ?>">
-				<?php echo self::img( $s['image'], 'full', [ 'class' => 'ens-hero__img', 'sizes' => 'split' === $layout ? '(max-width: 1024px) 100vw, 50vw' : '100vw', 'loading' => 'eager', 'fetchpriority' => 'high' ] ); // phpcs:ignore ?>
+				<?php
+				$sizes = [ 'home' => ens_cover_sizes( $s['image']['id'] ?? 0, 112, 704 ), 'page' => ens_cover_sizes( $s['image']['id'] ?? 0, 70, 520 ) ][ $layout ] ?? '(max-width: 1024px) 100vw, 50vw';
+				echo self::img( $s['image'], 'full', [ 'class' => 'ens-hero__img', 'sizes' => $sizes, 'loading' => 'eager', 'fetchpriority' => 'high' ] ); // phpcs:ignore
+				?>
 			</div>
 			<div class="ens-hero__inner">
 				<?php if ( $s['eyebrow'] ) : ?>

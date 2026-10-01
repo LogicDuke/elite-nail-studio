@@ -87,6 +87,7 @@ Native widgets (Heading, Text Editor, Button, Image, Counter, Icon List) are sty
 | Container | `ens-flush` · `ens-tight` · `ens-flush-top` | section padding variants |
 | Container | `ens-center` · `ens-narrow` | centred / narrow content |
 | Container | `ens-sticky-col` | sticky column (desktop) |
+| Container (wrapping an ENS Hero) | `ens-hero-calm` | stronger left/top scrim for busy hero photography |
 | Container | `ens-overlap-up` · `ens-first-tablet` | pull a card up over the previous section / move first when stacked |
 
 Top-level containers get section padding (`--ens-section`) and side gutters automatically; set

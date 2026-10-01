@@ -22,7 +22,7 @@ while ( have_posts() ) :
 	?>
 	<section class="ens-hero ens-hero--page ens-hero--post">
 		<div class="ens-hero__media">
-			<?php the_post_thumbnail( 'full', [ 'class' => 'ens-hero__img', 'sizes' => '100vw', 'fetchpriority' => 'high' ] ); ?>
+			<?php the_post_thumbnail( 'full', [ 'class' => 'ens-hero__img', 'sizes' => ens_cover_sizes( get_post_thumbnail_id(), 70, 520 ), 'fetchpriority' => 'high' ] ); ?>
 		</div>
 		<div class="ens-hero__inner">
 			<?php if ( $cat ) : ?>
