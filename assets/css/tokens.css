@@ -1,0 +1,98 @@
+/* Elite Nail Studio — design tokens. The only file that holds raw colour values.
+ * Palette tokens read Elementor Global Colours first (Site Settings → Global Colors),
+ * so recolouring in Elementor recolours the theme layer too. See docs/design-system.md. */
+
+@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond.woff2") format("woff2"); font-weight: 300 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond-italic.woff2") format("woff2"); font-weight: 300 600; font-style: italic; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("../fonts/jost.woff2") format("woff2"); font-weight: 300 600; font-style: normal; font-display: swap; }
+
+/* Declared on body as well: Elementor defines --e-global-* on body.elementor-kit-N, so the
+ * bridge only resolves where those exist. */
+:root, body {
+	/* Palette — "Atelier" */
+	--ens-ivory: var(--e-global-color-ens_ivory, #F8F4F0);
+	--ens-porcelain: var(--e-global-color-ens_porcelain, #FFFDFB);
+	--ens-linen: var(--e-global-color-ens_linen, #F1E6DF);
+	--ens-nude: var(--e-global-color-ens_nude, #E9D5CC);
+	--ens-rose: var(--e-global-color-ens_rose, #C99091);
+	--ens-rose-ink: var(--e-global-color-ens_rose_ink, #8F585A);
+	--ens-champagne: var(--e-global-color-ens_champagne, #B99A72);
+	--ens-champagne-ink: var(--e-global-color-ens_champagne_ink, #85683F);
+	--ens-espresso: var(--e-global-color-ens_espresso, #271D1B);
+	--ens-cocoa: var(--e-global-color-ens_cocoa, #5E4B45);
+	--ens-taupe: var(--e-global-color-ens_taupe, #6F5C56);
+
+	/* Derived */
+	--ens-line: color-mix(in srgb, var(--ens-espresso) 12%, transparent);
+	--ens-line-strong: color-mix(in srgb, var(--ens-espresso) 24%, transparent);
+	--ens-overlay: color-mix(in srgb, var(--ens-espresso) 45%, transparent);
+	--ens-on-dark: var(--ens-ivory);
+	--ens-on-dark-muted: color-mix(in srgb, var(--ens-ivory) 72%, transparent);
+	--ens-line-on-dark: color-mix(in srgb, var(--ens-ivory) 22%, transparent);
+
+	/* Semantic aliases — components use these */
+	--ens-bg: var(--ens-ivory);
+	--ens-surface: var(--ens-porcelain);
+	--ens-surface-alt: var(--ens-linen);
+	--ens-text: var(--ens-espresso);
+	--ens-text-muted: var(--ens-cocoa);
+	--ens-text-subtle: var(--ens-taupe);
+	--ens-heading: var(--ens-espresso);
+	--ens-accent: var(--ens-rose);
+	--ens-accent-ink: var(--ens-rose-ink);
+	--ens-detail: var(--ens-champagne);
+	--ens-dark: var(--ens-espresso);
+
+	/* Type */
+	--ens-font-display: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+	--ens-font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+	--ens-fs-display: clamp(3.25rem, 1.1rem + 8.2vw, 9rem);
+	--ens-fs-h1: clamp(2.75rem, 1.7rem + 4.3vw, 5.5rem);
+	--ens-fs-h2: clamp(2.25rem, 1.6rem + 2.7vw, 4rem);
+	--ens-fs-h3: clamp(1.6rem, 1.35rem + 1vw, 2.25rem);
+	--ens-fs-h4: clamp(1.3rem, 1.2rem + .4vw, 1.55rem);
+	--ens-fs-lead: clamp(1.1rem, 1rem + .4vw, 1.3rem);
+	--ens-fs-body: clamp(1rem, .97rem + .12vw, 1.0625rem);
+	--ens-fs-small: .875rem;
+	--ens-fs-label: .72rem;
+	--ens-tracking-label: .22em;
+
+	/* Space */
+	--ens-s-1: 4px; --ens-s-2: 8px; --ens-s-3: 12px; --ens-s-4: 16px; --ens-s-5: 24px;
+	--ens-s-6: 32px; --ens-s-7: 48px; --ens-s-8: 64px; --ens-s-9: 96px; --ens-s-10: 128px;
+	--ens-section: clamp(72px, 5vw + 52px, 152px);
+	--ens-section-sm: clamp(48px, 3vw + 36px, 96px);
+	--ens-gutter: clamp(20px, 4vw, 56px);
+	--ens-gap: clamp(16px, 2vw, 32px);
+
+	/* Layout */
+	--ens-container: 1320px;
+	--ens-container-wide: 1560px;
+	--ens-container-narrow: 760px;
+	--ens-header-h: 88px;
+
+	/* Shape */
+	--ens-radius-0: 0;
+	--ens-radius-sm: 2px;
+	--ens-radius-pill: 999px;
+	--ens-radius-arch: 999px 999px 0 0;
+	--ens-shadow-sm: 0 1px 2px rgb(39 29 27 / .06);
+	--ens-shadow-card: 0 24px 60px -32px rgb(39 29 27 / .28);
+	--ens-shadow-float: 0 40px 80px -40px rgb(39 29 27 / .35);
+
+	/* Motion */
+	--ens-ease: cubic-bezier(.22, 1, .36, 1);
+	--ens-ease-in-out: cubic-bezier(.65, 0, .35, 1);
+	--ens-dur-1: .35s;
+	--ens-dur-2: .9s;
+	--ens-dur-3: 1.4s;
+	--ens-stagger: 90ms;
+}
+
+@media (max-width: 1024px) {
+	:root, body { --ens-header-h: 72px; }
+}
+
+/* Additional palettes: add a block like this and set it via the `ens_palette` filter.
+[data-ens-palette="noir"] { --ens-ivory: …; --ens-espresso: …; }
+*/

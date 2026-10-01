@@ -1,0 +1,39 @@
+# Elite Nail Studio — theme repository. Only theme source and docs belong here;
+# WordPress core, uploads, database dumps and wp-config live outside this folder.
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs, temp, caches
+*.log
+*.tmp
+*.bak
+.cache/
+__pycache__/
+*.py[cod]
+
+# Dependencies / build output (none used today; keep them out if added)
+node_modules/
+vendor/
+dist/
+*.zip
+
+# Secrets & data
+.env
+.env.*
+*.sql
+*.sql.gz
+*.sqlite
+
+# Generated demo media and QA artifacts (regenerate with demo/build-images.py)
+demo/placeholders/
+screenshots/
+qa/
+*.har
