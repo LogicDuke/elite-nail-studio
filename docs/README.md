@@ -4,9 +4,10 @@ Luxury nail-atelier template for WordPress + Elementor (free). Demo brand: **Mai
 
 | Doc | Contents |
 |---|---|
-| `reference-audit.md` | What was learned from the Nayaka reference (structure, type, motion, responsive) |
 | `design-system.md` | Tokens, type scale, spacing, components, motion and responsive rules |
-| `image-roadmap.md` | Every image slot with ratio, resolution, subject, composition and mood |
+
+Production documents (image roadmaps, reference research) and the placeholder generator live in
+the source repository only and are not part of the distributed theme.
 
 ---
 
@@ -139,16 +140,17 @@ There is no submissions database — add a CPT store or an SMTP plugin if the st
 ## 6. Demo content
 
 ```bash
-python demo/build-images.py <dir>      # placeholders + docs/image-roadmap.md from demo/images.json
 wp ens seed --images=<dir>             # kit globals, media, pages, footer/404 templates, posts, menus
 ```
+
+`<dir>` holds one `ens-<slot>.jpg` per slot listed in `demo/images.json` (the demo photography pack).
 
 The seed is idempotent (matches by slug / filename) and can be re-run after edits to
 `demo/seed.php`; it overwrites the demo pages' Elementor data.
 
 **Replacing placeholders with photography:** upload final images over the `ens-<slot>.jpg`
-attachments (same filenames) or swap them in Elementor. Every slot is listed in
-`image-roadmap.md`.
+attachments (same filenames) or swap them in Elementor. Every slot (page, section, ratio,
+resolution, subject) is listed in `demo/images.json`.
 
 ---
 
