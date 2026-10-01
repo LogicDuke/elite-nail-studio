@@ -18,12 +18,12 @@ Total slots: **52**
 | `home-hero-detail` | Home | Hero — arch inset | portrait | 4:5 | 1200x1500 | Macro of a single glossy rose-nude nail touching a crystal perfume stopper | Centred subject, shallow depth of field, upper third clear for the arch crop | Glossy, intimate, jewellery-like |
 | `home-intro` | Home | Intro — atelier | portrait | 4:5 | 1600x2000 | The atelier: ivory boucle chairs, a walnut manicure table, linen curtains, a vase of dried pampas | Eye-level, one-point perspective, table in lower third | Calm, airy, architectural |
 | `home-intro-detail` | Home | Intro — detail | square | 1:1 | 1200x1200 | Flat lay of polish bottles in nude, rose and espresso tones on raw linen with a brass file | Top-down, diagonal arrangement, 20% breathing room on all sides | Tactile, editorial still life |
-| `service-manicure` | Home / Services / Service detail | Service card + detail hero — Signature Manicure | portrait | 4:5 | 1200x1500 | Technician shaping a client's natural nails with a glass file | Hands only, centred, technician's hand entering from top | Precise, gentle, clean |
-| `service-gel` | Home / Services / Service detail | Service card + detail hero — Gel Couture | portrait | 4:5 | 1200x1500 | Glossy gel manicure in deep rose under a soft LED glow | Hand angled 30°, nails sharp, background blurred lamp light | Glossy, rich, modern |
-| `service-art` | Home / Services / Service detail | Service card + detail hero — Nail Art Atelier | portrait | 4:5 | 1200x1500 | Fine-liner brush painting a minimal gold line on a nude nail | Macro, brush tip at golden-ratio point | Artisan, focused |
-| `service-extensions` | Home / Services / Service detail | Service card + detail hero — Sculpted Extensions | portrait | 4:5 | 1200x1500 | Long sculpted almond extensions in milky pink, hand posed against ivory silk | Hand vertical, fingers fanned, silk folds behind | Elegant, sculptural |
-| `service-pedicure` | Home / Services / Service detail | Service card + detail hero — Spa Pedicure | portrait | 4:5 | 1200x1500 | Feet resting in a stone basin with floating rose petals and milk | Top-down, basin edge crossing lower third | Restorative, spa |
-| `service-ritual` | Home / Services / Service detail | Service card + detail hero — Hand Ritual | portrait | 4:5 | 1200x1500 | Warm paraffin and oil massage, hands wrapped in a linen towel | Close crop, towel texture filling lower half | Warm, slow, nurturing |
+| `service-manicure` | Home / Services / Service detail | Service card + detail hero — Signature Manicure | portrait | 4:5 | 1600x2000 | Technician shaping a client's natural nails with a glass file | Hands only, centred, technician's hand entering from top | Precise, gentle, clean |
+| `service-gel` | Home / Services / Service detail | Service card + detail hero — Gel Couture | portrait | 4:5 | 1600x2000 | Glossy gel manicure in deep rose under a soft LED glow | Hand angled 30°, nails sharp, background blurred lamp light | Glossy, rich, modern |
+| `service-art` | Home / Services / Service detail | Service card + detail hero — Nail Art Atelier | portrait | 4:5 | 1600x2000 | Fine-liner brush painting a minimal gold line on a nude nail | Macro, brush tip at golden-ratio point | Artisan, focused |
+| `service-extensions` | Home / Services / Service detail | Service card + detail hero — Sculpted Extensions | portrait | 4:5 | 1600x2000 | Long sculpted almond extensions in milky pink, hand posed against ivory silk | Hand vertical, fingers fanned, silk folds behind | Elegant, sculptural |
+| `service-pedicure` | Home / Services / Service detail | Service card + detail hero — Spa Pedicure | portrait | 4:5 | 1600x2000 | Feet resting in a stone basin with floating rose petals and milk | Top-down, basin edge crossing lower third | Restorative, spa |
+| `service-ritual` | Home / Services / Service detail | Service card + detail hero — Hand Ritual | portrait | 4:5 | 1600x2000 | Warm paraffin and oil massage, hands wrapped in a linen towel | Close crop, towel texture filling lower half | Warm, slow, nurturing |
 | `story-1` | Home | Sticky story — Consultation | portrait | 4:5 | 1600x2000 | Client and artist choosing shades from a swatch ring | Over-the-shoulder, swatch ring in focus | Collaborative, personal |
 | `story-2` | Home | Sticky story — Preparation | portrait | 4:5 | 1600x2000 | Cuticle care with a wooden pusher, close macro | Macro, single finger, shallow focus | Meticulous |
 | `story-3` | Home | Sticky story — Finish | portrait | 4:5 | 1600x2000 | Finished set held beside a coffee cup and a folded linen napkin | Lifestyle, hand lower-left, cup upper-right | Satisfied, effortless |
@@ -59,10 +59,10 @@ Total slots: **52**
 | `contact-hero` | Contact | Page hero | landscape | 21:9 | 2880x1234 | Atelier door ajar, warm light inside | Door left third | Inviting |
 | `contact-side` | Contact | Visit us image | landscape | 4:3 | 1600x1200 | Street corner view of the atelier window | Window centred | Neighbourhood |
 | `journal-hero` | Journal | Archive hero | landscape | 21:9 | 2880x1234 | Open magazine beside a manicured hand and espresso | Top-down | Editorial |
-| `post-1` | Journal | Post — Autumn shades | landscape | 3:2 | 1800x1200 | Autumn palette swatches with fallen leaves | Flat lay | Seasonal |
-| `post-2` | Journal | Post — Cuticle care | landscape | 3:2 | 1800x1200 | Cuticle oil dropper on fingertip | Macro | Care |
-| `post-3` | Journal | Post — Bridal nails | landscape | 3:2 | 1800x1200 | Bride's hands with bouquet | Close crop | Romantic |
-| `post-4` | Journal | Post — Gel vs BIAB | landscape | 3:2 | 1800x1200 | Two hands side by side, gel vs builder gel | Symmetrical | Informative |
-| `post-5` | Journal | Post — Minimal art | landscape | 3:2 | 1800x1200 | Minimal dot art on nude nails | Macro | Modern |
-| `post-6` | Journal | Post — Studio ritual | landscape | 3:2 | 1800x1200 | Hot towel and essential oils tray | Top-down | Spa |
+| `post-1` | Journal | Post — Autumn shades | landscape | 3:2 | 2880x1920 | Autumn palette swatches with fallen leaves | Flat lay | Seasonal |
+| `post-2` | Journal | Post — Cuticle care | landscape | 3:2 | 2880x1920 | Cuticle oil dropper on fingertip | Macro | Care |
+| `post-3` | Journal | Post — Bridal nails | landscape | 3:2 | 2880x1920 | Bride's hands with bouquet | Close crop | Romantic |
+| `post-4` | Journal | Post — Gel vs BIAB | landscape | 3:2 | 2880x1920 | Two hands side by side, gel vs builder gel | Symmetrical | Informative |
+| `post-5` | Journal | Post — Minimal art | landscape | 3:2 | 2880x1920 | Minimal dot art on nude nails | Macro | Modern |
+| `post-6` | Journal | Post — Studio ritual | landscape | 3:2 | 2880x1920 | Hot towel and essential oils tray | Top-down | Spa |
 | `notfound` | 404 | Hero | landscape | 16:9 | 2880x1620 | Single overturned polish bottle with a soft spill of nude colour | Bottle right third | Wry, elegant |
