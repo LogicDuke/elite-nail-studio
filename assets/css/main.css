@@ -668,6 +668,8 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 	background-repeat: no-repeat;
 }
 .ens-form__submit { margin: 10px 0 0; }
+.ens-form__note { grid-column: 1 / -1; margin: 0; font-size: var(--ens-fs-small); color: var(--ens-text-muted); }
+.ens-form__note a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
 .ens-form__submit .ens-btn { width: 100%; }
 .ens-form__status { margin: 0 0 var(--ens-s-5); padding: 14px 18px; background: var(--ens-surface-alt); border-left: 2px solid var(--ens-detail); font-size: var(--ens-fs-small); }
 .ens-form__status--error, .ens-form__status--invalid { border-left-color: var(--ens-accent-ink); }

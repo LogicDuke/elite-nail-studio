@@ -1030,7 +1030,8 @@ class ENS_Seed {
 		] );
 		$privacy = (int) get_option( 'wp_page_for_privacy_policy' );
 		if ( $privacy ) {
-			wp_update_post( [ 'ID' => $privacy, 'post_status' => 'publish' ] );
+			// Privacy notice: plain block content (editable in WordPress), from demo/privacy-notice.html.
+			wp_update_post( wp_slash( [ 'ID' => $privacy, 'post_status' => 'publish', 'post_title' => 'Privacy Notice', 'post_content' => (string) file_get_contents( __DIR__ . '/privacy-notice.html' ) ] ) );
 		}
 		$make( 'Footer legal', 'footer', array_filter( [ $privacy ? [ 'Privacy', $privacy, [] ] : null, [ 'FAQ', $ids['faq'], [] ], [ 'Contact', $ids['contact'], [] ], [ 'Legal notice', $ids['legal-notice'], [] ] ] ) );
 	}

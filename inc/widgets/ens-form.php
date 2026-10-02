@@ -105,6 +105,12 @@ class ENS_Form extends ENS_Widget {
 				<p class="ens-form__submit">
 					<button class="ens-btn<?php echo 'dark' === $s['tone'] ? ' ens-btn--light' : ''; ?>" type="submit"><span><?php echo esc_html( $s['submit'] ); ?></span></button>
 				</p>
+				<?php if ( get_privacy_policy_url() ) : ?>
+					<p class="ens-form__note">
+						<?php echo esc_html( 'newsletter' === $type ? __( 'Used only to send our letters.', 'elite-nail-studio' ) : __( 'Used only to answer your request.', 'elite-nail-studio' ) ); ?>
+						<a href="<?php echo esc_url( get_privacy_policy_url() ); ?>"><?php esc_html_e( 'Privacy notice', 'elite-nail-studio' ); ?></a>
+					</p>
+				<?php endif; ?>
 			</form>
 		</div>
 		<?php
