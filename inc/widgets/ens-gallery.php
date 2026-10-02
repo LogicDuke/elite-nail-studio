@@ -44,7 +44,7 @@ class ENS_Gallery extends ENS_Widget {
 			<div class="ens-gallery__grid ens-stagger">
 				<?php
 				foreach ( $s['items'] as $item ) :
-					$full = ! empty( $item['image']['id'] ) ? wp_get_attachment_image_url( $item['image']['id'], 'full' ) : ( $item['image']['url'] ?? '' );
+					$full = ! empty( $item['image']['id'] ) ? ens_webp_url( (string) wp_get_attachment_image_url( $item['image']['id'], 'full' ) ) : ( $item['image']['url'] ?? '' );
 					?>
 					<figure class="ens-gallery__item" data-ens-cat="<?php echo esc_attr( sanitize_title( $item['category'] ) ); ?>">
 						<a class="ens-zoom" href="<?php echo esc_url( $full ); ?>" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="<?php echo esc_attr( $id ); ?>" data-elementor-lightbox-title="<?php echo esc_attr( $item['caption'] ); ?>">

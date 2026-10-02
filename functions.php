@@ -16,6 +16,7 @@ require ENS_DIR . '/inc/palette.php';
 require ENS_DIR . '/inc/palette-customizer.php';
 require ENS_DIR . '/inc/demo-palette-switcher.php';
 require ENS_DIR . '/inc/options.php';
+require ENS_DIR . '/inc/webp.php';
 require ENS_DIR . '/inc/forms.php';
 require ENS_DIR . '/inc/elementor.php';
 
@@ -36,8 +37,7 @@ add_action( 'after_setup_theme', function () {
 	] );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'html5', [ 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ] );
-	add_image_size( 'ens-card', 900, 1125, true );   // 4:5
-	add_image_size( 'ens-wide', 1600, 0 );
+	add_image_size( 'ens-card', 900, 1125, true );   // 4:5, portrait/square sources only (inc/webp.php)
 }, 20 );
 
 add_action( 'wp_head', function () {

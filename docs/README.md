@@ -153,6 +153,13 @@ The seed is idempotent (matches by slug / filename) and can be re-run after edit
 attachments (same filenames) or swap them in Elementor. Every slot (page, section, ratio,
 resolution, subject) is listed in `demo/images.json`.
 
+**Image delivery (`inc/webp.php`):** photographs stay JPEG in the Media Library (source and every
+size); a WebP sibling (quality 86) is written beside each file on upload and served in `src`/`srcset`
+when it is at least 10 % smaller. Attachment IDs, Elementor references and JPEG URLs never change.
+Siblings are removed with their attachment. For media imported before the theme was active:
+`wp ens webp` (add `--force` to rebuild). Sizes: core sizes plus `ens-card` (900×1125, portrait and
+square sources only); hero and CTA sources stay at their full 2880 px because portrait cover crops need it.
+
 ---
 
 ## 7. Team development
