@@ -79,7 +79,7 @@ add_action( 'wp_body_open', function () {
 	?>
 	<section class="ens-consent" aria-labelledby="ens-consent-title" data-ens-consent-banner hidden>
 		<h2 class="ens-consent__title" id="ens-consent-title"><?php esc_html_e( 'Your privacy', 'elite-nail-studio' ); ?></h2>
-		<p class="ens-consent__text"><?php esc_html_e( 'This site uses only the storage it needs to work. With your permission, the language selector can also translate pages through GTranslate and Google, which then receive the page text and your IP address.', 'elite-nail-studio' ); ?></p>
+		<p class="ens-consent__text"><?php esc_html_e( 'This site uses only the storage it needs to work. With your permission, pages can also be translated through GTranslate and Google, which then receive the page text and your IP address. If your browser is set to one of the languages offered, this happens automatically.', 'elite-nail-studio' ); ?></p>
 		<?php echo ens_consent_links(); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in ens_consent_links(). ?>
 		<div class="ens-consent__actions">
 			<button type="button" class="ens-btn ens-btn--sm" data-eds-consent-action="reject"><span><?php esc_html_e( 'Reject optional', 'elite-nail-studio' ); ?></span></button>
@@ -111,7 +111,7 @@ add_action( 'wp_footer', function () {
 			<li class="ens-consent__category">
 				<div>
 					<h3 class="ens-consent__category-title"><label for="ens-consent-preferences"><?php esc_html_e( 'Preferences: translation', 'elite-nail-studio' ); ?></label></h3>
-					<p class="ens-consent__category-text" id="ens-consent-preferences-desc"><?php esc_html_e( 'Lets the language selector load GTranslate, send the page text to Google’s translation service and remember the language you choose.', 'elite-nail-studio' ); ?></p>
+					<p class="ens-consent__category-text" id="ens-consent-preferences-desc"><?php esc_html_e( 'Lets GTranslate translate pages with Google’s translation service, which receives the page text: into the language you choose, or automatically into your browser’s language when it is one of those offered. The language is remembered.', 'elite-nail-studio' ); ?></p>
 				</div>
 				<input class="ens-consent__switch" type="checkbox" role="switch" id="ens-consent-preferences" data-eds-consent-category="preferences" aria-describedby="ens-consent-preferences-desc">
 			</li>

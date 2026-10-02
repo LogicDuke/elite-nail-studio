@@ -41,12 +41,16 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>This category is off until you switch it on. It covers the language selector in the footer, provided by GTranslate (GTranslate Inc.) using Google’s translation service. With your permission, choosing or pointing at the selector loads a script from cdn.gtranslate.net, and choosing a language sends the text of the page to Google (translate-pa.googleapis.com) to be translated. Both services receive your IP address and browser details and may process them outside your country; see the <a href="https://gtranslate.io/privacy-policy">GTranslate privacy policy</a> and the <a href="https://policies.google.com/privacy">Google privacy policy</a>.</p>
+<p>This category is off until you switch it on. It covers the language selector in the footer, provided by GTranslate (GTranslate Inc.) using Google’s translation service. With your permission, a script loads from cdn.gtranslate.net and the text of the page is sent to Google (translate-pa.googleapis.com) to be translated: into the language you choose, or automatically into your browser’s language when it is one of the languages offered. Both services receive your IP address and browser details and may process them outside your country; see the <a href="https://gtranslate.io/privacy-policy">GTranslate privacy policy</a> and the <a href="https://policies.google.com/privacy">Google privacy policy</a>.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
 <ul class="wp-block-list"><!-- wp:list-item -->
-<li><strong>__GT_TRANSLATE_LANGS</strong> (local storage, GTranslate): stores the original and the chosen language, so that the pages you open next are translated too. Created only after you allow translation and choose a language.</li>
+<li><strong>__GT_TRANSLATE_LANGS</strong> (local storage, GTranslate): stores the original and the chosen language, so that the pages you open next are translated too. Created only after you allow translation, when a page is translated.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>gt_autoswitch</strong> (local storage, GTranslate): records that your browser’s language has been checked, so the automatic switch happens only once. Created only after you allow translation.</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list -->
 
