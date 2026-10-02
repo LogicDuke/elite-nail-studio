@@ -16,7 +16,7 @@ Source of truth in code: `assets/css/tokens.css` (all tokens) and `assets/css/ma
 3. **Square edges, one signature curve.** Cards and images are square-cornered; the **arch**
    (`border-radius: 999px 999px 0 0`) is reserved for a few hero/portrait images. Buttons are pills.
 4. **Motion has hierarchy.** One major reveal per section, supporting elements follow. Nothing bounces.
-5. **Every colour from a token.** Palettes are swapped globally, never per selector.
+5. **Every colour from a token.** Palettes and section tones re-point tokens, never per selector.
 
 ---
 
@@ -38,42 +38,58 @@ Source of truth in code: `assets/css/tokens.css` (all tokens) and `assets/css/ma
 | `--ens-cocoa` | `#5E4B45` | secondary text (7.5 : 1 on ivory) |
 | `--ens-taupe` | `#6F5C56` | muted/meta text (5.7 : 1 on ivory) |
 
-Derived (in tokens.css): `--ens-line` (espresso @ 12 %), `--ens-line-strong` (@ 24 %),
-`--ens-overlay` (espresso @ 45 %), `--ens-on-dark` (ivory), `--ens-on-dark-muted` (ivory @ 72 %).
+Global (tokens.css): `--ens-dark` (espresso), `--ens-overlay` (espresso @ 45 %), `--ens-on-dark`
+(ivory), `--ens-on-dark-muted` (ivory @ 72 %), `--ens-line-on-dark` (ivory @ 22 %) — photography and
+dark chrome (hero, CTA band, overlay menu, footer legal row). Helper slots: `--ens-on-rose` (label on
+rose fills) and `--ens-rose-glow` (rose as text on dark).
 
-### Semantic aliases (what components use)
+### Palettes
 
-`--ens-bg`, `--ens-surface`, `--ens-surface-alt`, `--ens-text`, `--ens-text-muted`,
-`--ens-text-subtle`, `--ens-heading`, `--ens-accent`, `--ens-accent-ink`, `--ens-detail`,
-`--ens-dark`, `--ens-on-dark`.
+Atelier is the fixed default and one of 44 EDS palettes (Appearance → Customize → *Maison Élise
+Colours*). The other 43 come from `bin/palette-sources.json` (ink / depth / metal / mist / paper per
+palette) and are derived into the slots above by `bin/palette-build.php`, which writes
+`inc/palette-registry.php`. Atelier's slots are never derived.
 
-### Elementor bridge
+Layers, lowest to highest: tokens.css fallbacks (Atelier) → saved palette, printed inline on `:root`
+as `--ens-c-*` → demo preview (EDS Demo Palette Switcher re-points `--ens-c-*` on
+`html[data-eds-demo-palette]`) → section tone (role tokens re-pointed on the section).
 
-Each palette token reads the matching Elementor Global Colour first:
+### Role tokens (what components use)
 
-```css
---ens-rose: var(--e-global-color-ens_rose, #C99091);
+`--ens-bg`, `--ens-surface`, `--ens-surface-alt`, `--ens-soft`, `--ens-text`, `--ens-heading`,
+`--ens-text-muted`, `--ens-text-subtle`, `--ens-accent` (fill / button wash), `--ens-on-accent`,
+`--ens-accent-ink` (emphasis, links), `--ens-eyebrow`, `--ens-detail`, `--ens-strong` /
+`--ens-on-strong` (buttons, active chips), `--ens-focus`, `--ens-line`, `--ens-line-strong`.
+Each tone (light / dark / accent) maps them in `ens_tones()` (inc/palette.php); light is `:root`.
+
+### Section tones and patterns
+
+* `ens-sec-dark` and `ens-tone-dark` → dark tone; `ens-tone-light`, `ens-tone-accent` → the others.
+* A section pattern (Original, Dark/Light, Light/Dark, Dark/Light/Accent, Light/Dark/Accent, Mostly
+  light, Mostly dark) gives every top-level page container a tone by position. Photographic
+  sections (ENS Hero, ENS CTA) are skipped; a container with an `ens-tone-*` class keeps its own.
+  Original adds nothing. Palettes whose Accent fails the gate skip Accent in the cycle.
+
+### Elementor
+
+The theme never reads Elementor Global Colours. `tokens.css` re-points the kit's `ens_*` and system
+colours to the theme tokens on the front end, and saving the Customizer writes the saved palette into
+the kit, so the editor's swatches match. Edit colours in the Customizer, not in Site Settings.
+
+### Gates
+
 ```
-
-The theme seeds these globals into the Elementor Kit (Site Settings → Global Colors), so a
-customer recolouring the site in Elementor recolours the whole theme layer too (header, footer,
-custom widgets, motion accents).
-
-### Adding a palette
-
-Add one block to `tokens.css`:
-
-```css
-[data-ens-palette="noir"] { --ens-ivory: …; --ens-espresso: …; … }
+php bin/palette-build.php          rebuild the registry
+php bin/palette-build.php --check  exit 1 if the registry is stale or a palette fails
+php bin/contrast-gate.php [slug]   every tone of every palette (text 4.5:1, UI 3:1)
 ```
-
-and set it on `<html>` via the `ens_palette` filter. Nothing else changes.
 
 ### Contrast rules
 
 * Body text: `--ens-text` or `--ens-text-muted` only.
 * Rose/champagne **fills** never carry ivory text — use espresso (6.2 : 1).
 * Small accent text uses the `*-ink` variants.
+* Focus ring: champagne-ink on light (≥ 3 : 1), champagne on dark.
 
 ---
 

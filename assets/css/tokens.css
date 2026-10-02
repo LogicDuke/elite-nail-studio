@@ -1,47 +1,37 @@
-/* Elite Nail Studio — design tokens. The only file that holds raw colour values.
- * Palette tokens read Elementor Global Colours first (Site Settings → Global Colors),
- * so recolouring in Elementor recolours the theme layer too. See docs/design-system.md. */
+/* Elite Nail Studio — design tokens. Raw colours live only here (Atelier fallbacks) and in the
+ * generated palette registry (inc/palette-registry.php); see docs/design-system.md. */
 
 @font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond.woff2") format("woff2"); font-weight: 300 600; font-style: normal; font-display: swap; }
 @font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond-italic.woff2") format("woff2"); font-weight: 300 600; font-style: italic; font-display: swap; }
 @font-face { font-family: "Jost"; src: url("../fonts/jost.woff2") format("woff2"); font-weight: 300 600; font-style: normal; font-display: swap; }
 
-/* Declared on body as well: Elementor defines --e-global-* on body.elementor-kit-N, so the
- * bridge only resolves where those exist. */
-:root, body {
-	/* Palette — "Atelier" */
-	--ens-ivory: var(--e-global-color-ens_ivory, #F8F4F0);
-	--ens-porcelain: var(--e-global-color-ens_porcelain, #FFFDFB);
-	--ens-linen: var(--e-global-color-ens_linen, #F1E6DF);
-	--ens-nude: var(--e-global-color-ens_nude, #E9D5CC);
-	--ens-rose: var(--e-global-color-ens_rose, #C99091);
-	--ens-rose-ink: var(--e-global-color-ens_rose_ink, #8F585A);
-	--ens-champagne: var(--e-global-color-ens_champagne, #B99A72);
-	--ens-champagne-ink: var(--e-global-color-ens_champagne_ink, #85683F);
-	--ens-espresso: var(--e-global-color-ens_espresso, #271D1B);
-	--ens-cocoa: var(--e-global-color-ens_cocoa, #5E4B45);
-	--ens-taupe: var(--e-global-color-ens_taupe, #6F5C56);
+/* Colour layers (lowest to highest): the Atelier fallbacks below → the saved palette, printed
+ * inline as --ens-c-* on :root (inc/palette.php) → a demo preview, which re-points --ens-c-* on
+ * html[data-eds-demo-palette] → a section's tone (.ens-sec-dark, .ens-tone-*, section pattern),
+ * which re-points the role tokens (--ens-bg, --ens-text, …) on that section. Role tokens are
+ * generated from ens_tones(); components use roles, raw slots only on photography and dark chrome. */
+:root {
+	/* Palette — Atelier fallbacks */
+	--ens-ivory: var(--ens-c-ivory, #F8F4F0);
+	--ens-porcelain: var(--ens-c-porcelain, #FFFDFB);
+	--ens-linen: var(--ens-c-linen, #F1E6DF);
+	--ens-nude: var(--ens-c-nude, #E9D5CC);
+	--ens-rose: var(--ens-c-rose, #C99091);
+	--ens-rose-ink: var(--ens-c-rose-ink, #8F585A);
+	--ens-champagne: var(--ens-c-champagne, #B99A72);
+	--ens-champagne-ink: var(--ens-c-champagne-ink, #85683F);
+	--ens-espresso: var(--ens-c-espresso, #271D1B);
+	--ens-cocoa: var(--ens-c-cocoa, #5E4B45);
+	--ens-taupe: var(--ens-c-taupe, #6F5C56);
+	--ens-on-rose: var(--ens-c-on-rose, #271D1B);
+	--ens-rose-glow: var(--ens-c-rose-glow, #C99091);
 
-	/* Derived */
-	--ens-line: color-mix(in srgb, var(--ens-espresso) 12%, transparent);
-	--ens-line-strong: color-mix(in srgb, var(--ens-espresso) 24%, transparent);
+	/* Dark chrome and photography (hero, CTA, menu, footer) */
+	--ens-dark: var(--ens-espresso);
 	--ens-overlay: color-mix(in srgb, var(--ens-espresso) 45%, transparent);
 	--ens-on-dark: var(--ens-ivory);
 	--ens-on-dark-muted: color-mix(in srgb, var(--ens-ivory) 72%, transparent);
 	--ens-line-on-dark: color-mix(in srgb, var(--ens-ivory) 22%, transparent);
-
-	/* Semantic aliases — components use these */
-	--ens-bg: var(--ens-ivory);
-	--ens-surface: var(--ens-porcelain);
-	--ens-surface-alt: var(--ens-linen);
-	--ens-text: var(--ens-espresso);
-	--ens-text-muted: var(--ens-cocoa);
-	--ens-text-subtle: var(--ens-taupe);
-	--ens-heading: var(--ens-espresso);
-	--ens-accent: var(--ens-rose);
-	--ens-accent-ink: var(--ens-rose-ink);
-	--ens-detail: var(--ens-champagne);
-	--ens-dark: var(--ens-espresso);
 
 	/* Type */
 	--ens-font-display: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
@@ -90,9 +80,26 @@
 }
 
 @media (max-width: 1024px) {
-	:root, body { --ens-header-h: 72px; }
+	:root { --ens-header-h: 72px; }
 }
 
-/* Additional palettes: add a block like this and set it via the `ens_palette` filter.
-[data-ens-palette="noir"] { --ens-ivory: …; --ens-espresso: …; }
-*/
+/* Elementor Global Colours follow the theme palette (and a demo preview); the Customizer
+ * writes the saved palette into the kit as well (inc/palette-customizer.php). One way only:
+ * theme tokens never read --e-global-*. */
+body[class*="elementor-kit-"] {
+	--e-global-color-ens_ivory: var(--ens-ivory);
+	--e-global-color-ens_porcelain: var(--ens-porcelain);
+	--e-global-color-ens_linen: var(--ens-linen);
+	--e-global-color-ens_nude: var(--ens-nude);
+	--e-global-color-ens_rose: var(--ens-rose);
+	--e-global-color-ens_rose_ink: var(--ens-rose-ink);
+	--e-global-color-ens_champagne: var(--ens-champagne);
+	--e-global-color-ens_champagne_ink: var(--ens-champagne-ink);
+	--e-global-color-ens_espresso: var(--ens-espresso);
+	--e-global-color-ens_cocoa: var(--ens-cocoa);
+	--e-global-color-ens_taupe: var(--ens-taupe);
+	--e-global-color-primary: var(--ens-espresso);
+	--e-global-color-secondary: var(--ens-cocoa);
+	--e-global-color-text: var(--ens-cocoa);
+	--e-global-color-accent: var(--ens-rose);
+}

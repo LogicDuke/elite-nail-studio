@@ -19,11 +19,14 @@ Hello Elementor (parent, untouched)
     ├── functions.php          bootstrap, enqueue, Hello overrides, header-mode detection
     ├── header.php / footer.php global header (PHP, menu + Customizer) / footer (Elementor template)
     ├── template-parts/         archive, single, 404, journal card (overrides Hello's parts)
+    ├── inc/palette*.php        palettes, section tones/patterns, Customizer colours, registry (generated)
+    ├── inc/demo-palette-switcher.php  registers palettes with the optional EDS Demo Palette Switcher
     ├── inc/options.php         Customizer "Studio Details", icons, badge + template helpers
     ├── inc/forms.php           form handler (booking, quick booking, contact, newsletter)
     ├── inc/elementor.php       widget category, self-hosted font group, widget auto-registration
     ├── inc/widgets/            15 "ENS" Elementor widgets (one class per file)
-    ├── assets/css/tokens.css   design tokens — the only file with raw colour values
+    ├── assets/css/tokens.css   design tokens (Atelier fallbacks, type, space, motion)
+    ├── bin/                    palette build, stale check and contrast gate (CLI)
     ├── assets/css/main.css     all components (sections numbered in the header comment)
     ├── assets/js/motion.js     motion + interaction engine (vanilla, ~9 KB)
     ├── assets/fonts/           Cormorant Garamond + Jost variable woff2 (OFL)
@@ -43,7 +46,8 @@ No Elementor Pro and no third-party add-ons.
 | Navigation | Appearance → Menus (*Primary*, *Footer legal*) | |
 | Studio details | Appearance → Customize → *Studio Details* | announcement bar, phone, email, address, hours, Instagram, header button |
 | Brand name | Settings → General (Site Title / Tagline) or a Custom Logo | wordmark in header |
-| Colours & fonts | Elementor → Site Settings → Global Colors / Fonts | flows into tokens.css (see §3) |
+| Colours | Appearance → Customize → *Maison Élise Colours* | 44 palettes + section pattern (see §3) |
+| Fonts | Elementor → Site Settings → Global Fonts | |
 | Blog | Posts (block editor) + featured images | Journal archive & single templates |
 
 The header stays in PHP on purpose: its scroll behaviour, transparent-over-hero mode and overlay
@@ -84,7 +88,8 @@ Native widgets (Heading, Text Editor, Button, Image, Counter, Icon List) are sty
 | Text Editor | `ens-lead` | large light intro paragraph |
 | Button | `ens-btn-outline` · `ens-btn-light` | button variants |
 | Image | `ens-arch` | arch-shaped crop |
-| Container | `ens-sec-dark` · `ens-sec-linen` · `ens-sec-nude` · `ens-sec-porcelain` | section backgrounds |
+| Container | `ens-sec-dark` · `ens-sec-linen` · `ens-sec-nude` · `ens-sec-porcelain` | section backgrounds (Original pattern) |
+| Container | `ens-tone-dark` · `ens-tone-light` · `ens-tone-accent` | fixed tone; the section pattern skips it |
 | Container | `ens-flush` · `ens-tight` · `ens-flush-top` | section padding variants |
 | Container | `ens-center` · `ens-narrow` | centred / narrow content |
 | Container | `ens-sticky-col` | sticky column (desktop) |
@@ -98,18 +103,14 @@ padding in Elementor to override per section.
 
 ## 3. Colour architecture
 
-`tokens.css` defines every colour as `--ens-*`, each reading the matching Elementor global first:
+Colours live in one place: **Appearance → Customize → Maison Élise Colours**. Pick one of 44
+contrast-checked palettes (Atelier is the default) and a section pattern; the preview updates live.
+Components only use role tokens (`--ens-text`, `--ens-accent`, `--ens-surface`…), which each section
+tone re-points. Saving also copies the palette into Elementor's Global Colours, so the editor matches.
+Full model, gates and commands: design-system.md §2.
 
-```css
---ens-rose: var(--e-global-color-ens_rose, #C99091);
-```
-
-The demo seeds those globals into the Elementor Kit, so editing *Dusty Rose* in Site Settings
-recolours buttons, eyebrows, header, footer, widgets and motion accents at once. Components only
-use semantic aliases (`--ens-text`, `--ens-accent`, `--ens-surface`…), never raw values.
-
-**New palette:** add a `[data-ens-palette="name"] { … }` block in tokens.css and return `name` from
-the `ens_palette` filter (sets `data-ens-palette` on `<html>`).
+**New palette:** add it to `bin/palette-sources.json`, run `php bin/palette-build.php`, then
+`php bin/contrast-gate.php`.
 
 ---
 

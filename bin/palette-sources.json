@@ -1,0 +1,827 @@
+{
+ "_about": "Elite Digital Solutions palette library (same names and source colours as Elite Realty / elite-restaurant-v2). Atelier is the fixed Maison Élise default: its slots are the approved colours, byte for byte. Every other palette is derived by bin/palette-build.php from its ink / depth / metal / mist / paper map. Edit here, then run: php bin/palette-build.php",
+ "palettes": {
+  "atelier": {
+   "name": "Atelier",
+   "colors": [
+    "#271D1B",
+    "#C99091",
+    "#B99A72",
+    "#E9D5CC",
+    "#F8F4F0"
+   ],
+   "map": {
+    "ink": "#271D1B",
+    "depth": "#5E4B45",
+    "metal": "#C99091",
+    "mist": "#E9D5CC",
+    "paper": "#F8F4F0"
+   }
+  },
+  "elite-signature": {
+   "name": "Elite Signature",
+   "colors": [
+    "#0B0B0B",
+    "#10211D",
+    "#C9A86A",
+    "#E7DDCF",
+    "#F5F0E6"
+   ],
+   "map": {
+    "ink": "#0B0B0B",
+    "depth": "#10211D",
+    "metal": "#C9A86A",
+    "mist": "#E7DDCF",
+    "paper": "#F5F0E6"
+   }
+  },
+  "gilded-noir": {
+   "name": "Gilded Noir",
+   "colors": [
+    "#0B0B0F",
+    "#D4AF37",
+    "#F5F0E6",
+    "#3B3A40",
+    "#8A6F3A"
+   ],
+   "map": {
+    "ink": "#0B0B0F",
+    "depth": "#3B3A40",
+    "metal": "#D4AF37",
+    "mist": "#8A6F3A",
+    "paper": "#F5F0E6"
+   }
+  },
+  "champagne-pearl": {
+   "name": "Champagne Pearl",
+   "colors": [
+    "#F7E7CE",
+    "#EAD9C3",
+    "#C8B7A6",
+    "#9B8F84",
+    "#2C2A28"
+   ],
+   "map": {
+    "ink": "#2C2A28",
+    "depth": "#9B8F84",
+    "metal": "#C8B7A6",
+    "mist": "#EAD9C3",
+    "paper": "#F7E7CE"
+   }
+  },
+  "emerald-velvet": {
+   "name": "Emerald Velvet",
+   "colors": [
+    "#0E3B2E",
+    "#1F6F54",
+    "#C9A227",
+    "#F2E8D8",
+    "#1B1B1D"
+   ],
+   "map": {
+    "ink": "#1B1B1D",
+    "depth": "#0E3B2E",
+    "metal": "#C9A227",
+    "mist": "#1F6F54",
+    "paper": "#F2E8D8"
+   }
+  },
+  "sapphire-lounge": {
+   "name": "Sapphire Lounge",
+   "colors": [
+    "#0B1B3A",
+    "#1E3A8A",
+    "#A1B2D6",
+    "#E7E2D9",
+    "#B48A5A"
+   ],
+   "map": {
+    "ink": "#0B1B3A",
+    "depth": "#1E3A8A",
+    "metal": "#B48A5A",
+    "mist": "#A1B2D6",
+    "paper": "#E7E2D9"
+   }
+  },
+  "rose-gold-dusk": {
+   "name": "Rose Gold Dusk",
+   "colors": [
+    "#B76E79",
+    "#E6C2C6",
+    "#6B4E5E",
+    "#F6EFE8",
+    "#1F1C1E"
+   ],
+   "map": {
+    "ink": "#1F1C1E",
+    "depth": "#6B4E5E",
+    "metal": "#B76E79",
+    "mist": "#E6C2C6",
+    "paper": "#F6EFE8"
+   }
+  },
+  "mocha-silk": {
+   "name": "Mocha Silk",
+   "colors": [
+    "#4B2E2A",
+    "#7A5645",
+    "#C6A58D",
+    "#EFE3D6",
+    "#1E1A18"
+   ],
+   "map": {
+    "ink": "#1E1A18",
+    "depth": "#4B2E2A",
+    "metal": "#C6A58D",
+    "mist": "#7A5645",
+    "paper": "#EFE3D6"
+   }
+  },
+  "ivory-marble": {
+   "name": "Ivory Marble",
+   "colors": [
+    "#F8F6F1",
+    "#D8D2C8",
+    "#AFA79C",
+    "#5B5A57",
+    "#121212"
+   ],
+   "map": {
+    "ink": "#121212",
+    "depth": "#5B5A57",
+    "metal": "#AFA79C",
+    "mist": "#D8D2C8",
+    "paper": "#F8F6F1"
+   }
+  },
+  "plum-regent": {
+   "name": "Plum Regent",
+   "colors": [
+    "#3A0D2C",
+    "#6A1B4D",
+    "#D9B1C7",
+    "#F3E6EF",
+    "#C6A24B"
+   ],
+   "map": {
+    "ink": "#3A0D2C",
+    "depth": "#6A1B4D",
+    "metal": "#C6A24B",
+    "mist": "#D9B1C7",
+    "paper": "#F3E6EF"
+   }
+  },
+  "copper-cashmere": {
+   "name": "Copper Cashmere",
+   "colors": [
+    "#8C4A2F",
+    "#C07A55",
+    "#E7C6B0",
+    "#F7F2EC",
+    "#2B2320"
+   ],
+   "map": {
+    "ink": "#2B2320",
+    "depth": "#8C4A2F",
+    "metal": "#C07A55",
+    "mist": "#E7C6B0",
+    "paper": "#F7F2EC"
+   }
+  },
+  "midnight-orchid": {
+   "name": "Midnight Orchid",
+   "colors": [
+    "#120B1A",
+    "#2B1B3D",
+    "#7A5C9E",
+    "#E7D9F2",
+    "#BFA36A"
+   ],
+   "map": {
+    "ink": "#120B1A",
+    "depth": "#2B1B3D",
+    "metal": "#BFA36A",
+    "mist": "#7A5C9E",
+    "paper": "#E7D9F2"
+   }
+  },
+  "caviar-cream": {
+   "name": "Caviar & Cream",
+   "colors": [
+    "#0F0F10",
+    "#2A2A2D",
+    "#C9C2B8",
+    "#F4F1EB",
+    "#A88F5A"
+   ],
+   "map": {
+    "ink": "#0F0F10",
+    "depth": "#2A2A2D",
+    "metal": "#A88F5A",
+    "mist": "#C9C2B8",
+    "paper": "#F4F1EB"
+   }
+  },
+  "forest-reserve": {
+   "name": "Forest Reserve",
+   "colors": [
+    "#102A24",
+    "#2F5D50",
+    "#9E8B5A",
+    "#EFE6D6",
+    "#3A2F2A"
+   ],
+   "map": {
+    "ink": "#102A24",
+    "depth": "#2F5D50",
+    "metal": "#9E8B5A",
+    "mist": "#3A2F2A",
+    "paper": "#EFE6D6"
+   }
+  },
+  "antique-brocade": {
+   "name": "Antique Brocade",
+   "colors": [
+    "#3E2C1C",
+    "#7B5E3B",
+    "#C2A77D",
+    "#EDE3CF",
+    "#5C2E2E"
+   ],
+   "map": {
+    "ink": "#3E2C1C",
+    "depth": "#5C2E2E",
+    "metal": "#C2A77D",
+    "mist": "#7B5E3B",
+    "paper": "#EDE3CF"
+   }
+  },
+  "slate-penthouse": {
+   "name": "Slate Penthouse",
+   "colors": [
+    "#1C1F24",
+    "#3A4452",
+    "#9AA3AD",
+    "#F2EEE7",
+    "#C79C5A"
+   ],
+   "map": {
+    "ink": "#1C1F24",
+    "depth": "#3A4452",
+    "metal": "#C79C5A",
+    "mist": "#9AA3AD",
+    "paper": "#F2EEE7"
+   }
+  },
+  "desert-luxe": {
+   "name": "Desert Luxe",
+   "colors": [
+    "#D8C3A5",
+    "#BFA38A",
+    "#8C6A4A",
+    "#F6F1E8",
+    "#2A2320"
+   ],
+   "map": {
+    "ink": "#2A2320",
+    "depth": "#8C6A4A",
+    "metal": "#BFA38A",
+    "mist": "#D8C3A5",
+    "paper": "#F6F1E8"
+   }
+  },
+  "garnet-gala": {
+   "name": "Garnet Gala",
+   "colors": [
+    "#4A0E16",
+    "#8E1B2F",
+    "#D7B9A6",
+    "#F4ECE6",
+    "#C3A14A"
+   ],
+   "map": {
+    "ink": "#4A0E16",
+    "depth": "#8E1B2F",
+    "metal": "#C3A14A",
+    "mist": "#D7B9A6",
+    "paper": "#F4ECE6"
+   }
+  },
+  "ocean-suite": {
+   "name": "Ocean Suite",
+   "colors": [
+    "#0E2A3A",
+    "#1B4D5C",
+    "#7FA6A8",
+    "#F1EFE8",
+    "#B08A57"
+   ],
+   "map": {
+    "ink": "#0E2A3A",
+    "depth": "#1B4D5C",
+    "metal": "#B08A57",
+    "mist": "#7FA6A8",
+    "paper": "#F1EFE8"
+   }
+  },
+  "olive-atelier": {
+   "name": "Olive Atelier",
+   "colors": [
+    "#2B3A2F",
+    "#556B2F",
+    "#C1B08A",
+    "#F3EEE2",
+    "#3C2F2A"
+   ],
+   "map": {
+    "ink": "#2B3A2F",
+    "depth": "#556B2F",
+    "metal": "#C1B08A",
+    "mist": "#3C2F2A",
+    "paper": "#F3EEE2"
+   }
+  },
+  "pewter-regency": {
+   "name": "Pewter Regency",
+   "colors": [
+    "#2E3136",
+    "#6B7078",
+    "#B8B0A6",
+    "#F5F2EC",
+    "#D1B27C"
+   ],
+   "map": {
+    "ink": "#2E3136",
+    "depth": "#6B7078",
+    "metal": "#D1B27C",
+    "mist": "#B8B0A6",
+    "paper": "#F5F2EC"
+   }
+  },
+  "sunlit-terrace": {
+   "name": "Sunlit Terrace",
+   "colors": [
+    "#F6E7D8",
+    "#E8C39E",
+    "#C98B5C",
+    "#6B4B3A",
+    "#1E1A18"
+   ],
+   "map": {
+    "ink": "#1E1A18",
+    "depth": "#6B4B3A",
+    "metal": "#C98B5C",
+    "mist": "#E8C39E",
+    "paper": "#F6E7D8"
+   }
+  },
+  "refined-elegance": {
+   "name": "Refined Elegance",
+   "colors": [
+    "#CDCBC8",
+    "#B9B8AE",
+    "#17181B",
+    "#646B3C"
+   ],
+   "map": {
+    "ink": "#17181B",
+    "depth": "#646B3C",
+    "metal": "#B9B8AE",
+    "mist": {
+     "mix": [
+      "#CDCBC8",
+      "#17181B",
+      0.1
+     ]
+    },
+    "paper": "#CDCBC8"
+   }
+  },
+  "enchanted-nature": {
+   "name": "Enchanted Nature",
+   "colors": [
+    "#132B57",
+    "#4B6730",
+    "#3E5D65",
+    "#9D7312"
+   ],
+   "map": {
+    "ink": "#132B57",
+    "depth": "#4B6730",
+    "metal": "#9D7312",
+    "mist": "#3E5D65",
+    "paper": {
+     "mix": [
+      "#9D7312",
+      "#FFFFFF",
+      0.88
+     ]
+    }
+   }
+  },
+  "monochromatic-blues": {
+   "name": "Monochromatic Blues",
+   "colors": [
+    "#124A97",
+    "#167BB6",
+    "#7FC3D4",
+    "#ABCED9"
+   ],
+   "map": {
+    "ink": {
+     "mix": [
+      "#124A97",
+      "#000000",
+      0.6
+     ]
+    },
+    "depth": "#124A97",
+    "metal": "#7FC3D4",
+    "mist": "#167BB6",
+    "paper": "#ABCED9"
+   }
+  },
+  "vibrant-greens": {
+   "name": "Vibrant Greens",
+   "colors": [
+    "#E1FCAD",
+    "#122023",
+    "#1E1E1F",
+    "#E9E9E9"
+   ],
+   "map": {
+    "ink": "#122023",
+    "depth": "#1E1E1F",
+    "metal": "#E1FCAD",
+    "mist": {
+     "mix": [
+      "#E9E9E9",
+      "#122023",
+      0.1
+     ]
+    },
+    "paper": "#E9E9E9"
+   }
+  },
+  "warm-neutrals": {
+   "name": "Warm Neutrals",
+   "colors": [
+    "#51301F",
+    "#7A3110",
+    "#AA8867",
+    "#FFF3DB"
+   ],
+   "map": {
+    "ink": "#51301F",
+    "depth": "#7A3110",
+    "metal": "#AA8867",
+    "mist": {
+     "mix": [
+      "#FFF3DB",
+      "#51301F",
+      0.1
+     ]
+    },
+    "paper": "#FFF3DB"
+   }
+  },
+  "maroon-mood": {
+   "name": "Maroon Mood",
+   "colors": [
+    "#262626",
+    "#575757",
+    "#7A3B3B",
+    "#F8F5F5"
+   ],
+   "map": {
+    "ink": "#262626",
+    "depth": "#7A3B3B",
+    "metal": "#F8F5F5",
+    "mist": "#575757",
+    "paper": "#F8F5F5"
+   }
+  },
+  "bold-orange": {
+   "name": "Bold Orange",
+   "colors": [
+    "#FF5C00",
+    "#3E2407",
+    "#796758",
+    "#F7F0E8"
+   ],
+   "map": {
+    "ink": "#3E2407",
+    "depth": "#796758",
+    "metal": "#FF5C00",
+    "mist": {
+     "mix": [
+      "#F7F0E8",
+      "#3E2407",
+      0.1
+     ]
+    },
+    "paper": "#F7F0E8"
+   }
+  },
+  "cool-blues": {
+   "name": "Cool Blues",
+   "colors": [
+    "#0D1E21",
+    "#2D464B",
+    "#899DA0",
+    "#D8E6E8"
+   ],
+   "map": {
+    "ink": "#0D1E21",
+    "depth": "#2D464B",
+    "metal": "#899DA0",
+    "mist": {
+     "mix": [
+      "#D8E6E8",
+      "#0D1E21",
+      0.1
+     ]
+    },
+    "paper": "#D8E6E8"
+   }
+  },
+  "minimal-neutrals": {
+   "name": "Minimal Neutrals",
+   "colors": [
+    "#101014",
+    "#3D3D47",
+    "#D0D1DB",
+    "#E6E6E6"
+   ],
+   "map": {
+    "ink": "#101014",
+    "depth": "#3D3D47",
+    "metal": "#D0D1DB",
+    "mist": {
+     "mix": [
+      "#E6E6E6",
+      "#101014",
+      0.1
+     ]
+    },
+    "paper": "#E6E6E6"
+   }
+  },
+  "vibrant-blues": {
+   "name": "Vibrant Blues",
+   "colors": [
+    "#002846",
+    "#5EB2F2",
+    "#567790",
+    "#BADDEF"
+   ],
+   "map": {
+    "ink": "#002846",
+    "depth": "#567790",
+    "metal": "#5EB2F2",
+    "mist": {
+     "mix": [
+      "#BADDEF",
+      "#002846",
+      0.1
+     ]
+    },
+    "paper": "#BADDEF"
+   }
+  },
+  "power-purple": {
+   "name": "Power Purple",
+   "colors": [
+    "#312335",
+    "#5B2655",
+    "#F2D0C4",
+    "#EBE7E0"
+   ],
+   "map": {
+    "ink": "#312335",
+    "depth": "#5B2655",
+    "metal": "#F2D0C4",
+    "mist": {
+     "mix": [
+      "#EBE7E0",
+      "#312335",
+      0.1
+     ]
+    },
+    "paper": "#EBE7E0"
+   }
+  },
+  "classic-neutrals": {
+   "name": "Classic Neutrals",
+   "colors": [
+    "#243D0F",
+    "#B1AF9E",
+    "#C2C2C2",
+    "#D4D3D1"
+   ],
+   "map": {
+    "ink": "#243D0F",
+    "depth": {
+     "mix": [
+      "#243D0F",
+      "#B1AF9E",
+      0.18
+     ]
+    },
+    "metal": "#B1AF9E",
+    "mist": "#C2C2C2",
+    "paper": "#D4D3D1"
+   }
+  },
+  "earth-tones": {
+   "name": "Earth Tones",
+   "colors": [
+    "#8E9867",
+    "#E1937D",
+    "#F8F3EC",
+    "#8D6959"
+   ],
+   "map": {
+    "ink": {
+     "mix": [
+      "#8D6959",
+      "#000000",
+      0.7
+     ]
+    },
+    "depth": "#8D6959",
+    "metal": "#E1937D",
+    "mist": "#8E9867",
+    "paper": "#F8F3EC"
+   }
+  },
+  "serene-coastline": {
+   "name": "Serene Coastline",
+   "colors": [
+    "#B7CCC8",
+    "#27818A",
+    "#99C0D1",
+    "#D0D0D2"
+   ],
+   "map": {
+    "ink": {
+     "mix": [
+      "#27818A",
+      "#000000",
+      0.75
+     ]
+    },
+    "depth": "#27818A",
+    "metal": "#99C0D1",
+    "mist": "#B7CCC8",
+    "paper": "#D0D0D2"
+   }
+  },
+  "sunset-glow": {
+   "name": "Sunset Glow",
+   "colors": [
+    "#FF9F1A",
+    "#F1B864",
+    "#C89779",
+    "#E7D2BF"
+   ],
+   "map": {
+    "ink": {
+     "mix": [
+      "#C89779",
+      "#000000",
+      0.85
+     ]
+    },
+    "depth": "#C89779",
+    "metal": "#FF9F1A",
+    "mist": "#F1B864",
+    "paper": "#E7D2BF"
+   }
+  },
+  "dreamy-pastel": {
+   "name": "Dreamy Pastel",
+   "colors": [
+    "#EBA0A0",
+    "#EDC999",
+    "#E5E7A4",
+    "#B6E3A8"
+   ],
+   "map": {
+    "ink": {
+     "mix": [
+      "#EBA0A0",
+      "#000000",
+      0.85
+     ]
+    },
+    "depth": "#EBA0A0",
+    "metal": "#EDC999",
+    "mist": "#B6E3A8",
+    "paper": "#E5E7A4"
+   }
+  },
+  "aegean-blue-white": {
+   "name": "Aegean Blue & White",
+   "colors": [
+    "#0D3B66",
+    "#1D70A2",
+    "#6FB7D6",
+    "#F4F7F8",
+    "#D8D2C4"
+   ],
+   "map": {
+    "ink": "#0D3B66",
+    "depth": "#D8D2C4",
+    "metal": "#1D70A2",
+    "mist": "#6FB7D6",
+    "paper": "#F4F7F8"
+   }
+  },
+  "cycladic-cobalt": {
+   "name": "Cycladic Cobalt",
+   "colors": [
+    "#082C4C",
+    "#0057A6",
+    "#2F80C9",
+    "#E9F2F7",
+    "#C8D4DA"
+   ],
+   "map": {
+    "ink": "#082C4C",
+    "depth": "#0057A6",
+    "metal": "#2F80C9",
+    "mist": "#C8D4DA",
+    "paper": "#E9F2F7"
+   }
+  },
+  "mediterranean-sea-glass": {
+   "name": "Mediterranean Sea Glass",
+   "colors": [
+    "#123B46",
+    "#2A7C83",
+    "#64B6AC",
+    "#DDEFEA",
+    "#F5F1E8"
+   ],
+   "map": {
+    "ink": "#123B46",
+    "depth": "#2A7C83",
+    "metal": "#64B6AC",
+    "mist": "#DDEFEA",
+    "paper": "#F5F1E8"
+   }
+  },
+  "greek-terracotta": {
+   "name": "Greek Terracotta",
+   "colors": [
+    "#153A5B",
+    "#2E6F95",
+    "#C96F4A",
+    "#D8BE91",
+    "#F3EBDD"
+   ],
+   "map": {
+    "ink": "#153A5B",
+    "depth": "#2E6F95",
+    "metal": "#C96F4A",
+    "mist": "#D8BE91",
+    "paper": "#F3EBDD"
+   }
+  },
+  "olive-limestone": {
+   "name": "Olive & Limestone",
+   "colors": [
+    "#26382A",
+    "#5E7447",
+    "#A99A6F",
+    "#D8D0BB",
+    "#F2EEE4"
+   ],
+   "map": {
+    "ink": "#26382A",
+    "depth": "#5E7447",
+    "metal": "#A99A6F",
+    "mist": "#D8D0BB",
+    "paper": "#F2EEE4"
+   }
+  },
+  "santorini-sunset": {
+   "name": "Santorini Sunset",
+   "colors": [
+    "#173B64",
+    "#487FB3",
+    "#D98C73",
+    "#E9B79F",
+    "#F5EBDD"
+   ],
+   "map": {
+    "ink": "#173B64",
+    "depth": "#487FB3",
+    "metal": "#D98C73",
+    "mist": "#E9B79F",
+    "paper": "#F5EBDD"
+   }
+  }
+ }
+}

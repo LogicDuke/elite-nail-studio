@@ -12,6 +12,9 @@ define( 'ENS_VERSION', '1.0.0' );
 define( 'ENS_DIR', get_stylesheet_directory() );
 define( 'ENS_URI', get_stylesheet_directory_uri() );
 
+require ENS_DIR . '/inc/palette.php';
+require ENS_DIR . '/inc/palette-customizer.php';
+require ENS_DIR . '/inc/demo-palette-switcher.php';
 require ENS_DIR . '/inc/options.php';
 require ENS_DIR . '/inc/forms.php';
 require ENS_DIR . '/inc/elementor.php';
@@ -37,12 +40,6 @@ add_action( 'after_setup_theme', function () {
 	add_image_size( 'ens-wide', 1600, 0 );
 }, 20 );
 
-/** `<html data-ens-palette>` — alternative palettes are a tokens.css block + this filter. */
-add_filter( 'language_attributes', function ( $output ) {
-	$palette = apply_filters( 'ens_palette', '' );
-	return $palette ? $output . ' data-ens-palette="' . esc_attr( $palette ) . '"' : $output;
-} );
-
 add_action( 'wp_head', function () {
 	// Pre-reveal states only apply under .ens-js, so content stays visible without JS.
 	echo "<script>document.documentElement.classList.add('ens-js')</script>\n";
@@ -55,6 +52,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	$deps = wp_style_is( 'elementor-frontend', 'registered' ) ? [ 'elementor-frontend' ] : [];
 	$ver  = fn( $file ) => ENS_VERSION . '.' . filemtime( ENS_DIR . $file );
 	wp_enqueue_style( 'ens-tokens', ENS_URI . '/assets/css/tokens.css', [], $ver( '/assets/css/tokens.css' ) );
+	wp_add_inline_style( 'ens-tokens', ens_palette_css() ); // Palette, tones, section pattern (inc/palette.php).
 	wp_enqueue_style( 'ens-main', ENS_URI . '/assets/css/main.css', array_merge( [ 'ens-tokens' ], $deps ), $ver( '/assets/css/main.css' ) );
 	wp_enqueue_script( 'ens-motion', ENS_URI . '/assets/js/motion.js', [], $ver( '/assets/js/motion.js' ), [ 'in_footer' => true, 'strategy' => 'defer' ] );
 	if ( is_singular( 'post' ) && comments_open() ) {
