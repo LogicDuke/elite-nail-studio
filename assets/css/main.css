@@ -479,6 +479,8 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 	letter-spacing: .04em;
 }
 .ens-footer__legal p { margin: 0; }
+/* Demo disclosure: quiet, centred, below the legal row. */
+.ens-footer__disclosure { max-width: 72ch; margin: 0 auto; padding: 4px var(--ens-gutter) 40px; font-size: .74rem; line-height: 1.65; letter-spacing: .02em; text-align: center; text-wrap: pretty; }
 .ens-footer__menu { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; list-style: none; }
 .ens-wordmark .elementor-heading-title { font: 300 clamp(3rem, 1rem + 9vw, 10rem)/.9 var(--ens-font-display); letter-spacing: .02em; text-transform: uppercase; color: var(--ens-on-dark); white-space: nowrap; }
 

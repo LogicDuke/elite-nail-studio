@@ -22,7 +22,11 @@ defined( 'ABSPATH' ) || exit;
 			'fallback_cb'    => false,
 		] );
 		?>
+		<p class="ens-footer__credit"><?php echo ens_eds( esc_html__( 'Crafted by Elite Digital Solutions', 'elite-nail-studio' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped, then wrapped. ?></p>
 	</div>
+	<?php if ( ens_opt( 'ens_disclosure' ) ) : // Demo sites: Customizer → Studio Details → Footer disclosure. ?>
+		<p class="ens-footer__disclosure"><?php echo ens_eds( esc_html( ens_opt( 'ens_disclosure' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped, then wrapped. ?></p>
+	<?php endif; ?>
 </footer>
 
 <?php wp_footer(); ?>

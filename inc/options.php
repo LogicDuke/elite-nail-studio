@@ -16,7 +16,22 @@ function ens_defaults() {
 		'ens_instagram'  => 'https://instagram.com/',
 		'ens_book_label' => __( 'Book appointment', 'elite-nail-studio' ),
 		'ens_book_url'   => '/booking/',
+		'ens_disclosure' => '', // demo sites only (set by `wp ens seed`); empty = not shown
+		'ens_credit_url' => '', // Elite Digital Solutions website, once public; empty = plain text
 	];
+}
+
+/**
+ * "Elite Digital Solutions" kept out of machine translation, linked when a credit URL is set.
+ * Neighbouring spaces and a closing punctuation mark go inside the protected span, because
+ * translation trims them from the text around it (as for the brand name in motion.js).
+ */
+function ens_eds( $html ) {
+	return preg_replace_callback( '/(\s*)Elite Digital Solutions([.,;:!?]?\s*)/', function ( $m ) {
+		$url  = ens_opt( 'ens_credit_url' );
+		$name = $url ? '<a href="' . esc_url( $url ) . '">Elite Digital Solutions</a>' : 'Elite Digital Solutions';
+		return '<span class="notranslate" translate="no">' . $m[1] . $name . $m[2] . '</span>';
+	}, $html );
 }
 
 function ens_opt( $key ) {
@@ -40,6 +55,8 @@ add_action( 'customize_register', function ( WP_Customize_Manager $c ) {
 		'ens_instagram'  => [ __( 'Instagram URL', 'elite-nail-studio' ), 'url' ],
 		'ens_book_label' => [ __( 'Header button label', 'elite-nail-studio' ), 'text' ],
 		'ens_book_url'   => [ __( 'Header button link', 'elite-nail-studio' ), 'text' ],
+		'ens_disclosure' => [ __( 'Footer disclosure (demo sites only; leave empty on a real salon site)', 'elite-nail-studio' ), 'textarea' ],
+		'ens_credit_url' => [ __( 'Elite Digital Solutions credit link', 'elite-nail-studio' ), 'url' ],
 	];
 	foreach ( $fields as $id => [ $label, $type ] ) {
 		$c->add_setting( $id, [

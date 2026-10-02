@@ -1053,6 +1053,8 @@ class ENS_Seed {
 		update_option( 'page_on_front', $ids['home'] );
 		update_option( 'page_for_posts', $ids['journal'] );
 		update_option( 'posts_per_page', 9 );
+		// Public demo: say plainly that the salon is fictional (global footer, inc/options.php).
+		set_theme_mod( 'ens_disclosure', 'Maison Élise is a fictional demonstration website by Elite Digital Solutions. It is not an operating nail salon; treatments, artists, prices and availability are illustrative.' );
 		$this->seo();
 	}
 
