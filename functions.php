@@ -56,6 +56,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_add_inline_style( 'ens-tokens', ens_palette_css() ); // Palette, tones, section pattern (inc/palette.php).
 	wp_enqueue_style( 'ens-main', ENS_URI . '/assets/css/main.css', array_merge( [ 'ens-tokens' ], $deps ), $ver( '/assets/css/main.css' ) );
 	wp_enqueue_script( 'ens-motion', ENS_URI . '/assets/js/motion.js', [], $ver( '/assets/js/motion.js' ), [ 'in_footer' => true, 'strategy' => 'defer' ] );
+	wp_enqueue_script( 'ens-forms', ENS_URI . '/assets/js/forms.js', [], $ver( '/assets/js/forms.js' ), [ 'in_footer' => true, 'strategy' => 'defer' ] ); // Static-export forms (inc/forms.php).
 	if ( is_singular( 'post' ) && comments_open() ) {
 		wp_enqueue_script( 'comment-reply' );
 	}

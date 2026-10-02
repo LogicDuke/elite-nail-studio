@@ -60,9 +60,15 @@ class ENS_Form extends ENS_Widget {
 			'sent'    => $s['success'],
 			'invalid' => __( 'Please complete the required fields with a valid email address.', 'elite-nail-studio' ),
 			'error'   => __( 'Sorry, something went wrong. Please call us or try again.', 'elite-nail-studio' ),
+			'demo'    => [
+				'booking'    => __( 'Thank you. This is a demonstration booking form. On a live salon website, your request would be sent securely to the salon.', 'elite-nail-studio' ),
+				'quick'      => __( 'Thank you. This is a demonstration booking form. On a live salon website, your request would be sent securely to the salon.', 'elite-nail-studio' ),
+				'contact'    => __( 'Thank you. This is a demonstration contact form. On a live salon website, your message would be sent securely to the salon.', 'elite-nail-studio' ),
+				'newsletter' => __( 'Thank you. This is a demonstration sign-up form. On a live salon website, you would now be subscribed to the newsletter.', 'elite-nail-studio' ),
+			][ $type ] ?? '',
 		];
 		?>
-		<div class="ens-form ens-form--<?php echo esc_attr( $type . ' ens-form--' . $s['tone'] ); ?>" id="<?php echo esc_attr( $id ); ?>">
+		<div class="ens-form ens-form--<?php echo esc_attr( $type . ' ens-form--' . $s['tone'] ); ?>" id="<?php echo esc_attr( $id ); ?>" data-ens-messages="<?php echo esc_attr( wp_json_encode( $msgs ) ); ?>">
 			<?php if ( $s['heading'] ) : ?>
 				<h3 class="ens-form__heading"><?php echo esc_html( $s['heading'] ); ?></h3>
 			<?php endif; ?>

@@ -37,3 +37,7 @@ demo/placeholders/
 screenshots/
 qa/
 *.har
+
+# Cloudflare local runtime state (wrangler pages dev, see docs/static-forms.md)
+.wrangler/
+.dev.vars

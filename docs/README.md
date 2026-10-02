@@ -160,6 +160,10 @@ Siblings are removed with their attachment. For media imported before the theme 
 `wp ens webp` (add `--force` to rebuild). Sizes: core sizes plus `ens-card` (900×1125, portrait and
 square sources only); hero and CTA sources stay at their full 2880 px because portrait cover crops need it.
 
+**Forms on a static export:** the four ENS forms post to `admin-post.php` in WordPress and to a
+Cloudflare Pages Function (`cloudflare/functions/api/form.js`) after a Simply Static export; the
+switch happens automatically during the export. Configuration and deployment: `docs/static-forms.md`.
+
 **Consent (`inc/consent.php`, `assets/js/consent.js`):** two categories, Necessary (always on) and
 Preferences (translation). GTranslate's scripts are printed inert and start only after a visitor allows
 Preferences, so nothing reaches GTranslate or Google before that. The choice is kept in the visitor's
