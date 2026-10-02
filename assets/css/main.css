@@ -758,7 +758,7 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 .ens-prose li::marker { color: var(--ens-accent-ink); }
 .ens-prose img, .ens-prose figure { margin-block: 2em; }
 .ens-prose figcaption { margin-top: 10px; font-size: var(--ens-fs-small); color: var(--ens-text-subtle); }
-.ens-prose a { color: var(--ens-accent-ink); }
+.ens-prose a { color: var(--ens-accent-ink); text-decoration: underline; text-underline-offset: .2em; }
 
 /* ==========================================================================
    11. Motion — pre-reveal states exist only with JS and without reduced motion

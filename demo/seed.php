@@ -53,6 +53,11 @@ class ENS_Seed {
 			'thumb'        => 'journal-hero',
 		] );
 
+		// Legal notice: plain block content (editable in WordPress), from demo/legal-notice.html.
+		$ids['legal-notice'] = $this->save( 'page', 'legal-notice', 'Legal Notice', null, [
+			'post_content' => (string) file_get_contents( __DIR__ . '/legal-notice.html' ),
+		] );
+
 		$this->save( 'elementor_library', 'ens-footer', 'Global Footer', $this->footer() );
 		$this->save( 'elementor_library', 'ens-404', '404 Page', $this->not_found() );
 
@@ -238,7 +243,7 @@ class ENS_Seed {
 			'post_status'  => 'publish',
 			'post_parent'  => $extra['post_parent'] ?? 0,
 			'post_excerpt' => $extra['post_excerpt'] ?? '',
-			'post_content' => '',
+			'post_content' => $extra['post_content'] ?? '',
 		];
 		$id = wp_insert_post( wp_slash( $post ), true );
 		if ( is_wp_error( $id ) ) {
@@ -1027,7 +1032,7 @@ class ENS_Seed {
 		if ( $privacy ) {
 			wp_update_post( [ 'ID' => $privacy, 'post_status' => 'publish' ] );
 		}
-		$make( 'Footer legal', 'footer', array_filter( [ $privacy ? [ 'Privacy', $privacy, [] ] : null, [ 'FAQ', $ids['faq'], [] ], [ 'Contact', $ids['contact'], [] ] ] ) );
+		$make( 'Footer legal', 'footer', array_filter( [ $privacy ? [ 'Privacy', $privacy, [] ] : null, [ 'FAQ', $ids['faq'], [] ], [ 'Contact', $ids['contact'], [] ], [ 'Legal notice', $ids['legal-notice'], [] ] ] ) );
 	}
 
 	private function settings( array $ids ) {

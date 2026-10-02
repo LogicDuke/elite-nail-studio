@@ -128,3 +128,21 @@ add_filter( 'wp_content_img_tag', fn( $img ) => str_contains( $img, 'ens-cover' 
 function ens_lines( $text ) {
 	return implode( '<br>', array_map( 'esc_html', preg_split( '/\R/', trim( $text ) ) ) );
 }
+
+/**
+ * [ens_detail field="name|email|phone|address|privacy"]: Studio Details (Customizer) and site identity
+ * inside editable page content, so the Legal Notice updates with the Customizer.
+ */
+add_shortcode( 'ens_detail', function ( $atts ) {
+	$field = sanitize_key( $atts['field'] ?? '' );
+	$phone = ens_opt( 'ens_phone' );
+	$email = ens_opt( 'ens_email' );
+	return match ( $field ) {
+		'name'    => esc_html( get_bloginfo( 'name' ) ),
+		'email'   => $email ? '<a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a>' : '',
+		'phone'   => $phone ? '<a href="tel:' . esc_attr( preg_replace( '/[^\d+]/', '', $phone ) ) . '">' . esc_html( $phone ) . '</a>' : '',
+		'address' => ens_lines( ens_opt( 'ens_address' ) ),
+		'privacy' => get_the_privacy_policy_link(),
+		default   => '',
+	};
+} );
