@@ -1065,6 +1065,11 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 		overscroll-behavior-x: contain;
 	}
 	.ens-rail > * { scroll-snap-align: start; }
+	/* Pinned horizontal chapters (motion.js, mobile only, classes set at runtime): the section's
+	   inner block sticks while a spacer of --ens-pin-d is scrolled; the rail follows scroll progress. */
+	.ens-chapter::after { content: ""; display: block; flex: none; height: var(--ens-pin-d, 0px); }
+	.ens-chapter__pin { position: sticky; top: var(--ens-pin-top, 0px); }
+	.ens-chapter__rail { overflow-x: hidden; scroll-snap-type: none; }
 	.ens-team.ens-rail { grid-auto-columns: 72%; }
 	.ens-cards > :nth-child(3):last-child { display: block; }
 	.ens-archive .ens-cards { grid-template-columns: 1fr; }

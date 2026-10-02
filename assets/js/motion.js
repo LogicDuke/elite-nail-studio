@@ -106,11 +106,13 @@
 	/* ---------- Header ---------- */
 	const header = document.querySelector('[data-ens-header]');
 	let lastY = scrollY;
+	let shieldHeader = () => false; // set by the mobile pinned chapters below
 	const updateHeader = (y) => {
 		if (!header) return;
 		header.classList.toggle('is-scrolled', y > 24);
-		const down = y > lastY && y > 600 && !root.classList.contains('ens-menu-open');
-		header.classList.toggle('is-hidden', down && !header.contains(document.activeElement));
+		const menuOpen = root.classList.contains('ens-menu-open');
+		const down = y > lastY && y > 600 && !menuOpen;
+		header.classList.toggle('is-hidden', (down || (!menuOpen && shieldHeader(y))) && !header.contains(document.activeElement));
 		lastY = y;
 	};
 
@@ -238,6 +240,95 @@
 		});
 	};
 
+	/* ---------- Pinned horizontal chapters (mobile ≤767px, motion allowed) ---------- */
+	// Treatments, Journal and Lookbook rails: when the section reaches the viewport it pins (its inner
+	// block turns sticky) and further vertical scrolling moves the rail through its overflow; the
+	// section releases once the last item is in view, and the same in reverse. Horizontal position is
+	// derived from scroll progress only (linear, exactly reversible). The section is lengthened by a
+	// spacer of `overflow × PIN_RATIO`, measured from real geometry. DOM order is untouched; while
+	// pinned the rail is moved programmatically (manual horizontal swipe off, so nothing drifts), and
+	// keyboard focus scrolls the page to the focused card's position. Artists and other rails stay native.
+	const mobile = matchMedia('(max-width: 767px)');
+	const PIN_RATIO = 0.7; // vertical px per horizontal px: deliberate, never tiring (Lookbook ≈ 1200 px at 390 wide)
+	const chapters = $$('.ens-services.ens-rail, .ens-cards.ens-rail, .ens-lookbook__viewport').map((rail) => {
+		const book = rail.closest('.ens-lookbook');
+		let host = book;
+		if (!host) { // the page's top-level Elementor section holding the heading and the rail
+			host = rail.closest('.e-con');
+			while (host && host.parentElement.closest('.e-con')) host = host.parentElement.closest('.e-con');
+		}
+		const pin = book ? book.querySelector('.ens-lookbook__stage') : host?.querySelector(':scope > .e-con-inner');
+		return pin ? { rail, host, pin, start: 0, dist: 0, max: 0, on: false, railH: 0, railTop: 0, headH: 0, tooTall: false } : null;
+	}).filter(Boolean);
+	const chaptersOn = () => mobile.matches && !reduce;
+	const measureChapters = () => {
+		const on = chaptersOn();
+		chapters.forEach((c) => {
+			c.max = on ? c.rail.scrollWidth - c.rail.clientWidth : 0;
+			c.on = on && c.max > 0;
+			[c.host, c.pin, c.rail].forEach((el, i) => el.classList.toggle(['ens-chapter', 'ens-chapter__pin', 'ens-chapter__rail'][i], c.on));
+			if (!c.on) {
+				c.host.style.removeProperty('--ens-pin-d');
+				c.host.style.removeProperty('--ens-pin-top');
+				return;
+			}
+			const vh = innerHeight;
+			const h = c.pin.offsetHeight;
+			// The whole section centred when it fits; otherwise the rail itself centred (within the
+			// section's own edges), so the cards are fully in view however tall the section is.
+			const railOffset = c.rail.getBoundingClientRect().top - c.pin.getBoundingClientRect().top;
+			// A rail taller than the screen (e.g. long translated cards on a short phone) keeps its top edge.
+			let top = h <= vh ? (vh - h) / 2 : clamp(Math.max(0, (vh - c.rail.offsetHeight) / 2) - railOffset, vh - h, 0);
+			// Fixed header (as shown when scrolling up): keep the pinned rail below it when there is room;
+			// when there is not (short phones), the header stays out of the way while the rail crosses it.
+			const headH = header?.querySelector('.ens-header__main')?.offsetHeight || 0;
+			c.railH = c.rail.offsetHeight;
+			c.tooTall = c.railH + headH > vh;
+			if (!c.tooTall && top + railOffset < headH) top += headH - (top + railOffset);
+			c.railTop = top + railOffset; // viewport y of the rail's top while pinned
+			c.headH = headH;
+			c.dist = Math.round(c.max * PIN_RATIO);
+			c.host.style.setProperty('--ens-pin-d', `${c.dist}px`);
+			c.host.style.setProperty('--ens-pin-top', `${Math.round(top)}px`);
+			const hostTop = c.host.getBoundingClientRect().top + scrollY;
+			c.start = hostTop + parseFloat(getComputedStyle(c.host).paddingTop) - Math.round(top); // scrollY at which it pins
+		});
+	};
+	// True while a chapter rail crosses the header's band: a released rail sliding back in from above
+	// (re-entering from below), or a rail too tall to pin below the header. The header holds back
+	// instead of covering the cards, and returns once the rail is clear. Never on ≥768px.
+	shieldHeader = (y) => chapters.some((c) => {
+		if (!c.on) return false;
+		const railTop = c.railTop + Math.max(0, c.start - y) - Math.max(0, y - c.start - c.dist);
+		return railTop < c.headH && railTop + c.railH > c.headH;
+	});
+	const updateChapters = () => {
+		chapters.forEach((c) => {
+			if (!c.on) return;
+			const x = clamp((scrollY - c.start) / c.dist, 0, 1) * c.max;
+			if (Math.abs(c.rail.scrollLeft - x) >= 0.5) c.rail.scrollLeft = x;
+		});
+	};
+	if (chapters.length) {
+		// Keyboard: bring a focused card into view by scrolling the page to its point in the chapter.
+		chapters.forEach((c) => c.rail.addEventListener('focusin', (e) => {
+			if (!c.on) return;
+			const item = [...c.rail.querySelectorAll(':scope > *, .ens-look')].find((el) => el.contains(e.target) && !el.matches('ul'));
+			if (!item) return;
+			const pad = parseFloat(getComputedStyle(c.rail).paddingLeft) || parseFloat(getComputedStyle(item.parentElement).paddingLeft) || 0;
+			const x = clamp(item.offsetLeft - pad, 0, c.max);
+			scrollTo({ top: c.start + (x / c.max) * c.dist, behavior: 'instant' });
+			updateChapters();
+		}));
+		let queued = 0;
+		const remeasure = () => { cancelAnimationFrame(queued); queued = requestAnimationFrame(() => { measureChapters(); updateChapters(); }); };
+		const ro = new ResizeObserver(remeasure); // fonts, translation, late images, orientation
+		chapters.forEach((c) => { ro.observe(c.pin); ro.observe(c.rail); });
+		ro.observe(document.body);
+		mobile.addEventListener('change', remeasure);
+		measureChapters();
+	}
+
 	/* ---------- One scroll loop ---------- */
 	let ticking = false;
 	const onScroll = () => {
@@ -246,6 +337,7 @@
 		if (ticking) return;
 		ticking = true;
 		requestAnimationFrame(() => {
+			updateChapters();
 			updateHeader(scrollY);
 			updateBooks();
 			updateParallax();
@@ -256,7 +348,7 @@
 	let resizeTimer;
 	addEventListener('resize', () => {
 		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(() => { measureBooks(); onScroll(); }, 150);
+		resizeTimer = setTimeout(() => { measureBooks(); measureChapters(); onScroll(); }, 150);
 	});
 
 	/* ---------- Sticky story ---------- */
