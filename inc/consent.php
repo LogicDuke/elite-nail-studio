@@ -35,9 +35,20 @@ function ens_consent_config(): array {
 	];
 }
 
-/** GTranslate's widget scripts are optional (Preferences): print them inert. */
+/**
+ * GTranslate's widget scripts: host-neutral, so a static export never ships the
+ * WordPress origin (the widget and GTranslate's library use location.hostname
+ * when no origin is given), and optional (Preferences), so they are printed inert.
+ */
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-	if ( ! ens_consent_active() || ! str_starts_with( $handle, 'gt_widget_script_' ) ) {
+	if ( ! str_starts_with( $handle, 'gt_widget_script_' ) ) {
+		return $tag;
+	}
+	$home   = wp_parse_url( home_url() );
+	$origin = $home['scheme'] . '://' . $home['host'] . ( isset( $home['port'] ) ? ':' . $home['port'] : '' );
+	$tag    = str_replace( ' src="' . $origin . '/', ' src="/', $tag );
+	$tag    = (string) preg_replace( '/\sdata-gt-orig-domain="[^"]*"/', '', $tag );
+	if ( ! ens_consent_active() ) {
 		return $tag;
 	}
 	return (string) preg_replace( '/<script(?=[^>]*\ssrc=)([^>]*)\ssrc=/', '<script type="text/plain" data-eds-consent="preferences"$1 data-src=', $tag );
