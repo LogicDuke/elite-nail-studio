@@ -281,22 +281,27 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 .ens-nav .sub-menu {
 	position: absolute;
 	top: 100%;
-	left: -24px;
-	min-width: 240px;
+	left: -18px;
+	width: max-content;
 	margin: 0;
-	padding: 14px 0;
+	padding: 12px 0 10px;
 	list-style: none;
-	background: var(--ens-porcelain);
+	border: 1px solid var(--ens-line);
+	border-radius: var(--ens-radius-sm);
+	background: color-mix(in srgb, var(--ens-surface) 55%, var(--ens-bg));
 	color: var(--ens-text);
-	box-shadow: var(--ens-shadow-float);
+	box-shadow: 0 18px 36px -22px color-mix(in srgb, var(--ens-espresso) 30%, transparent);
 	opacity: 0;
 	visibility: hidden;
 	transform: translateY(8px);
 	transition: opacity .3s var(--ens-ease), transform .4s var(--ens-ease), visibility .3s;
 }
 .ens-nav li:is(:hover, :focus-within) > .sub-menu { opacity: 1; visibility: visible; transform: none; }
-.ens-nav .sub-menu a { display: block; padding: 10px 24px; letter-spacing: .14em; }
-.ens-nav .sub-menu a:hover { color: var(--ens-accent-ink); }
+/* Hairline under the parent label's edge: the eyebrow rule, tying panel to item. */
+.ens-nav .sub-menu::before { content: ""; position: absolute; top: -1px; left: 17px; width: 28px; height: 1px; background: var(--ens-accent); }
+.ens-nav .sub-menu a { display: block; padding: 8px 32px 8px 18px; letter-spacing: .14em; white-space: nowrap; transition: color var(--ens-dur-1) var(--ens-ease); }
+.ens-nav .sub-menu :is(a:hover, a:focus-visible, .current-menu-item > a) { color: var(--ens-accent-ink); }
+.ens-nav .sub-menu a:focus-visible { outline: 2px solid var(--ens-focus); outline-offset: -4px; box-shadow: none; }
 
 .ens-header__actions { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
 .ens-header__ig { display: inline-grid; place-items: center; width: 44px; height: 44px; color: inherit; }
