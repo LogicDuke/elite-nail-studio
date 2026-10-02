@@ -222,6 +222,12 @@
 		}));
 	});
 
+	/* ---------- Share links ---------- */
+	// A relative static export turns the permalink into a bare path; share the address actually shown.
+	$$('.ens-share a').forEach((a) => {
+		a.href = a.href.replace(/([?&](?:url|u|body)=)[^&]*/, (m, k) => k + encodeURIComponent(location.origin + location.pathname));
+	});
+
 	initReveals();
 	measureBooks();
 	onScroll();
