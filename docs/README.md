@@ -46,7 +46,7 @@ No Elementor Pro and no third-party add-ons.
 | Page content | Elementor | every heading, paragraph, image, price, artist, FAQ, CTA |
 | Global footer | Elementor → Templates → *Global Footer* (`ens-footer`) | newsletter, columns, wordmark |
 | 404 page | Elementor → Templates → *404 Page* (`ens-404`) | hero copy, suggested treatments |
-| Navigation | Appearance → Menus (*Primary*, *Footer legal*) | |
+| Navigation | Appearance → Menus (*Primary*, *Footer legal*) | dropdown images = each child page's featured image; CSS class `ens-nav-aside` on a child item sets it apart as a utility link (Pricing) |
 | Studio details | Appearance → Customize → *Studio Details* | announcement bar, phone, email, address, hours, Instagram, header button |
 | Brand name | Settings → General (Site Title / Tagline) or a Custom Logo | wordmark in header |
 | Colours | Appearance → Customize → *Maison Élise Colours* | 44 palettes + section pattern (see §3) |
@@ -126,7 +126,12 @@ Full model, gates and commands: design-system.md §2.
   motion; in the Elementor editor they are disabled so nothing is hidden while editing.
 * `prefers-reduced-motion: reduce`: no entrance animations, marquee becomes static wrapped text,
   badge stops, lookbook becomes a swipe rail, sticky story stacks, hero zoom off.
-* Overlay menu: `aria-expanded`, Escape closes and returns focus, closes on link click.
+* Overlay menu: `aria-expanded`, Escape closes and returns focus, closes on link click. Sections
+  with children are accordions (a toggle button beside the parent link, `aria-expanded` +
+  `aria-controls`, one open at a time); without JS all child links are listed.
+* Desktop dropdowns open on hover or keyboard focus, close after a short grace period (no flicker
+  on diagonal pointer paths), Escape closes and returns focus to the parent. On touch screens
+  without hover the first tap opens the panel and the second follows the link.
 * FAQ uses native `<details>`; slider is keyboard-operable (arrow keys); forms have labels,
   `autocomplete` hints and a status region.
 

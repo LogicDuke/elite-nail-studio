@@ -1020,8 +1020,9 @@ class ENS_Seed {
 					? [ 'menu-item-type' => 'custom', 'menu-item-url' => $page ]
 					: [ 'menu-item-object' => 'page', 'menu-item-object-id' => $page, 'menu-item-type' => 'post_type' ];
 				$parent = wp_update_nav_menu_item( $id, 0, [ 'menu-item-title' => $title, 'menu-item-status' => 'publish' ] + $target );
-				foreach ( $children as [ $ct, $cp ] ) {
-					wp_update_nav_menu_item( $id, 0, [ 'menu-item-title' => $ct, 'menu-item-object' => 'page', 'menu-item-object-id' => $cp, 'menu-item-type' => 'post_type', 'menu-item-parent-id' => $parent, 'menu-item-status' => 'publish' ] );
+				foreach ( $children as $child ) {
+					[ $ct, $cp ] = $child;
+					wp_update_nav_menu_item( $id, 0, [ 'menu-item-title' => $ct, 'menu-item-classes' => $child[2] ?? '', 'menu-item-object' => 'page', 'menu-item-object-id' => $cp, 'menu-item-type' => 'post_type', 'menu-item-parent-id' => $parent, 'menu-item-status' => 'publish' ] );
 				}
 			}
 			$locations              = get_theme_mod( 'nav_menu_locations', [] );
@@ -1030,7 +1031,8 @@ class ENS_Seed {
 		};
 		$treat = array_map( fn( $t ) => [ $t['title'], $ids[ $t['slug'] ] ], $this->treatments() );
 		$make( 'Primary', 'menu-1', [
-			[ 'Treatments', $ids['services'], array_merge( $treat, [ [ 'Pricing', $ids['pricing'] ] ] ) ],
+			// `ens-nav-aside`: set apart below the main list, as a quieter utility link (main.css §4–5).
+			[ 'Treatments', $ids['services'], array_merge( $treat, [ [ 'Pricing', $ids['pricing'], 'ens-nav-aside' ] ] ) ],
 			[ 'Lookbook', $ids['lookbook'], [] ],
 			[ 'Atelier', $ids['about'], [ [ 'Our story', $ids['about'] ], [ 'Artists', $ids['artists'] ], [ 'FAQ', $ids['faq'] ] ] ],
 			[ 'Journal', $ids['journal'], [] ],

@@ -278,30 +278,95 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 .ens-nav__list > li:is(:hover, :focus-within) > a::after,
 .ens-nav__list > :is(.current-menu-item, .current-menu-ancestor) > a::after { transform: scaleX(1); transform-origin: left; }
 .ens-nav__list > .menu-item-has-children > a::before { content: ""; order: 2; width: 5px; height: 5px; border-right: 1px solid; border-bottom: 1px solid; transform: translateY(-2px) rotate(45deg); }
+/* Dropdown panel: a compact editorial "mini mega-menu". Serif labels with index numerals, an
+   optional `ens-nav-aside` utility link (menu item CSS class) and an image column that shows the
+   hovered/focused item's featured image (functions.php), the first item's by default.
+   Opens instantly, closes after a short grace period so a diagonal pointer path never drops it;
+   a transparent bridge spans the gap under the trigger. Escape closes it (motion.js). */
+.ens-nav__list > li:is(:hover, :focus-within, .is-touch-open) { z-index: 2; }
 .ens-nav .sub-menu {
+	--ens-sub-pad: 26px;
 	position: absolute;
-	top: 100%;
-	left: -18px;
-	width: max-content;
+	top: calc(100% + 14px);
+	left: -30px;
+	display: grid;
+	grid-template-columns: minmax(200px, max-content);
+	align-content: start;
 	margin: 0;
-	padding: 12px 0 10px;
+	padding: var(--ens-sub-pad) 30px 22px;
 	list-style: none;
-	border: 1px solid var(--ens-line);
+	counter-reset: ens-sub;
+	border: 1px solid color-mix(in srgb, var(--ens-line) 70%, transparent);
 	border-radius: var(--ens-radius-sm);
-	background: color-mix(in srgb, var(--ens-surface) 55%, var(--ens-bg));
+	background: linear-gradient(165deg, var(--ens-bg) 30%, color-mix(in srgb, var(--ens-surface) 75%, var(--ens-bg)));
 	color: var(--ens-text);
-	box-shadow: 0 18px 36px -22px color-mix(in srgb, var(--ens-espresso) 30%, transparent);
+	box-shadow: var(--ens-shadow-float), 0 2px 6px -2px color-mix(in srgb, var(--ens-espresso) 12%, transparent);
 	opacity: 0;
 	visibility: hidden;
-	transform: translateY(8px);
-	transition: opacity .3s var(--ens-ease), transform .4s var(--ens-ease), visibility .3s;
+	transform: translateY(10px);
+	transition: opacity .25s var(--ens-ease) .14s, transform .35s var(--ens-ease) .14s, visibility 0s linear .5s;
 }
-.ens-nav li:is(:hover, :focus-within) > .sub-menu { opacity: 1; visibility: visible; transform: none; }
-/* Hairline under the parent label's edge: the eyebrow rule, tying panel to item. */
-.ens-nav .sub-menu::before { content: ""; position: absolute; top: -1px; left: 17px; width: 28px; height: 1px; background: var(--ens-accent); }
-.ens-nav .sub-menu a { display: block; padding: 8px 32px 8px 18px; letter-spacing: .14em; white-space: nowrap; transition: color var(--ens-dur-1) var(--ens-ease); }
+.ens-nav .sub-menu:has(.ens-nav__thumb) { grid-template-columns: minmax(220px, max-content) 196px; column-gap: 36px; min-height: 248px; padding-right: 22px; }
+.ens-nav li:is(:hover, :focus-within, .is-touch-open):not(.is-dismissed) > .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+	transition: opacity .3s var(--ens-ease), transform .45s var(--ens-ease), visibility 0s;
+}
+.ens-nav .sub-menu::before { content: ""; position: absolute; top: -1px; left: 29px; width: 36px; height: 1px; background: var(--ens-accent); }
+.ens-nav .sub-menu::after { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 16px; }
+.ens-nav .sub-menu > li { grid-column: 1; }
+/* Staggered entrance on the links (a transform on the <li> would re-anchor the image column). */
+.ens-nav .sub-menu > li > a { opacity: 0; transform: translateY(6px); transition: opacity .2s var(--ens-ease), transform .2s var(--ens-ease), color var(--ens-dur-1) var(--ens-ease), translate .45s var(--ens-ease); }
+.ens-nav li:is(:hover, :focus-within, .is-touch-open):not(.is-dismissed) > .sub-menu > li > a {
+	opacity: 1;
+	transform: none;
+	transition: opacity .4s var(--ens-ease) calc(.05s + var(--i, 0) * 35ms), transform .5s var(--ens-ease) calc(.05s + var(--i, 0) * 35ms), color var(--ens-dur-1) var(--ens-ease), translate .45s var(--ens-ease);
+}
+.ens-nav .sub-menu a {
+	display: flex;
+	align-items: baseline;
+	gap: 14px;
+	padding: 8px 0;
+	font: 400 1.32rem/1.15 var(--ens-font-display);
+	letter-spacing: .005em;
+	text-transform: none;
+	white-space: nowrap;
+}
+.ens-nav .sub-menu > li:not(.ens-nav-aside) > a::before {
+	counter-increment: ens-sub;
+	content: counter(ens-sub, decimal-leading-zero) / ""; /* decorative: not part of the link name */
+	min-width: 1.6em;
+	font: 500 .6rem/1 var(--ens-font-body);
+	letter-spacing: .14em;
+	color: var(--ens-accent-ink);
+}
+.ens-nav .sub-menu > .ens-nav-aside { margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--ens-line); }
+.ens-nav .sub-menu > .ens-nav-aside > a { gap: 10px; font: 500 var(--ens-fs-label)/1.6 var(--ens-font-body); letter-spacing: .18em; text-transform: uppercase; }
+.ens-nav .sub-menu > .ens-nav-aside > a::after { content: "→"; letter-spacing: 0; transition: transform .45s var(--ens-ease); }
 .ens-nav .sub-menu :is(a:hover, a:focus-visible, .current-menu-item > a) { color: var(--ens-accent-ink); }
-.ens-nav .sub-menu a:focus-visible { outline: 2px solid var(--ens-focus); outline-offset: -4px; box-shadow: none; }
+.ens-nav .sub-menu > li:not(.ens-nav-aside) > a:is(:hover, :focus-visible) { translate: 4px 0; }
+.ens-nav .sub-menu > .ens-nav-aside > a:is(:hover, :focus-visible)::after { transform: translateX(4px); }
+.ens-nav .sub-menu a:focus-visible { outline: 2px solid var(--ens-focus); outline-offset: 3px; box-shadow: none; }
+.ens-nav__thumb {
+	position: absolute;
+	top: var(--ens-sub-pad);
+	right: 22px;
+	bottom: 22px;
+	display: none;
+	width: 196px;
+	overflow: hidden;
+	border-radius: var(--ens-radius-sm);
+	background: var(--ens-surface);
+	opacity: 0;
+	transition: opacity .5s var(--ens-ease);
+}
+.ens-nav .is-primed .ens-nav__thumb { display: block; }
+.ens-nav__thumb img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1.4s var(--ens-ease); }
+.ens-nav .sub-menu > li:is(:hover, :focus-within) .ens-nav__thumb,
+.ens-nav .sub-menu:not(:has(> li:is(:hover, :focus-within) .ens-nav__thumb)) > li:first-child .ens-nav__thumb { opacity: 1; }
+.ens-nav .sub-menu > li:is(:hover, :focus-within) .ens-nav__thumb img,
+.ens-nav .sub-menu:not(:has(> li:is(:hover, :focus-within) .ens-nav__thumb)) > li:first-child .ens-nav__thumb img { transform: none; }
 
 .ens-header__actions { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
 .ens-header__ig { display: inline-grid; place-items: center; width: 44px; height: 44px; color: inherit; }
@@ -336,21 +401,61 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 }
 .ens-menu.is-open { clip-path: inset(0); }
 .ens-menu-open { overflow: hidden; }
-.ens-menu-open .ens-header { --ens-header-fg: var(--ens-on-dark); background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; transform: translateY(calc(-1 * var(--ens-bar-h))); }
+:root.ens-menu-open .ens-header { --ens-header-fg: var(--ens-on-dark); background: var(--ens-dark); /* the menu's own colour: scrolled links pass under it */ backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; transform: translateY(calc(-1 * var(--ens-bar-h))); }
 .ens-menu-open .ens-header .ens-header__cta { visibility: hidden; }
+/* Five large primary labels, no dividers. Sections with children become accordions (motion.js adds
+   the toggle button; one open at a time); without JS every child link stays listed. */
 .ens-menu__list { margin: 0; padding: 0; list-style: none; }
-.ens-menu__list > li { border-bottom: 1px solid var(--ens-line-on-dark); }
 .ens-menu__list > li > a {
 	display: block;
-	padding: 14px 0;
-	font: 300 clamp(2.1rem, 1.6rem + 2.4vw, 3.4rem)/1.05 var(--ens-font-display);
+	padding: 9px 0;
+	font: 300 clamp(2.3rem, 1.75rem + 2.6vw, 3.4rem)/1.05 var(--ens-font-display);
 	color: inherit;
 	text-decoration: none;
+	transition: color var(--ens-dur-1) var(--ens-ease);
 }
-.ens-menu__list > li > a:hover { color: var(--ens-rose-glow); }
-.ens-menu .sub-menu { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: -4px 0 18px; padding: 0; list-style: none; }
-.ens-menu .sub-menu a { font: 500 var(--ens-fs-label)/2 var(--ens-font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--ens-on-dark-muted); text-decoration: none; }
-.ens-menu .sub-menu a:hover { color: var(--ens-rose-glow); }
+.ens-menu__list > li > a:hover,
+.ens-menu__list > :is(.current-menu-item, .current-menu-ancestor) > a { color: var(--ens-rose-glow); }
+.ens-menu .sub-menu { margin: 2px 0 18px 3px; padding: 0 0 0 20px; list-style: none; border-left: 1px solid var(--ens-line-on-dark); }
+.ens-menu .sub-menu a {
+	display: block;
+	padding: 9px 0;
+	font: 400 1.06rem/1.35 var(--ens-font-body);
+	letter-spacing: .01em;
+	color: var(--ens-on-dark-muted);
+	text-decoration: none;
+	transition: color var(--ens-dur-1) var(--ens-ease);
+}
+.ens-menu .sub-menu :is(a:hover, .current-menu-item > a) { color: var(--ens-rose-glow); }
+.ens-menu .sub-menu > .ens-nav-aside > a { margin-top: 6px; font: 500 var(--ens-fs-label)/2 var(--ens-font-body); letter-spacing: .18em; text-transform: uppercase; }
+.ens-menu__toggle {
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	margin-right: -12px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	cursor: pointer;
+}
+.ens-menu__toggle:is(:hover, :focus) { background: none; color: var(--ens-rose-glow); }
+.ens-menu__toggle::before { content: ""; width: 10px; height: 10px; border-right: 1px solid; border-bottom: 1px solid; transform: translateY(-3px) rotate(45deg); transition: transform var(--ens-dur-1) var(--ens-ease); }
+.ens-menu__toggle[aria-expanded="true"]::before { transform: translateY(3px) rotate(-135deg); }
+.ens-menu__list > .ens-menu__acc { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 0fr; align-items: center; transition: grid-template-rows .4s var(--ens-ease), opacity .3s var(--ens-ease), transform .3s var(--ens-ease); }
+.ens-menu__list > .ens-menu__acc.is-expanded { grid-template-rows: auto 1fr; }
+.ens-menu__acc > .sub-menu { grid-column: 1 / -1; align-self: stretch; min-height: 0; margin-block: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear .4s; }
+.ens-menu__acc.is-expanded > .sub-menu { visibility: visible; transition: none; }
+.ens-menu__acc > .sub-menu > li:first-child { padding-top: 4px; }
+.ens-menu__acc > .sub-menu > li:last-child { padding-bottom: 14px; }
+/* Entrance: primary items and footer rise in sequence once the curtain opens. */
+.ens-menu__list > li, .ens-menu__foot { opacity: 0; transform: translateY(14px); transition: opacity .3s var(--ens-ease), transform .3s var(--ens-ease); }
+.ens-menu.is-open :is(.ens-menu__list > li, .ens-menu__foot) {
+	opacity: 1;
+	transform: none;
+	transition: opacity .6s var(--ens-ease) calc(.2s + var(--i, 5) * 60ms), transform .7s var(--ens-ease) calc(.2s + var(--i, 5) * 60ms), grid-template-rows .4s var(--ens-ease);
+}
 .ens-menu__foot { display: grid; gap: 16px; justify-items: start; color: var(--ens-on-dark-muted); font-size: var(--ens-fs-small); }
 .ens-menu__foot p { margin: 0; }
 .ens-menu__foot a { text-decoration: none; }
@@ -818,6 +923,10 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 	.ens-marquee__group { flex-wrap: wrap; justify-content: center; padding-inline: var(--ens-gutter); }
 	.ens-hero__cue::after, .ens-faq__item::details-content { animation: none; transition: none; }
 	.ens-story__frame, .ens-story__frame img, .ens-menu { transition: none; }
+	.ens-nav .sub-menu, .ens-nav .sub-menu > li > a, .ens-nav__thumb, .ens-nav__thumb img,
+	.ens-menu__list > li, .ens-menu__foot, .ens-menu.is-open :is(.ens-menu__list > li, .ens-menu__foot), .ens-menu__acc > .sub-menu, .ens-menu__toggle::before { transition: none; }
+	.ens-nav .sub-menu, .ens-nav .sub-menu > li > a, .ens-menu__list > li, .ens-menu__foot { transform: none; }
+	.ens-nav__thumb img { transform: none; }
 }
 
 /* ==========================================================================

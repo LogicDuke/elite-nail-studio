@@ -117,6 +117,31 @@
 	/* ---------- Overlay menu ---------- */
 	const toggle = document.querySelector('[data-ens-menu-toggle]');
 	const menu = document.querySelector('[data-ens-menu]');
+
+	// Sections with children become accordions: a toggle beside the parent link (which stays a
+	// link), one section open at a time.
+	const sections = $$('.ens-menu__list > .menu-item-has-children').map((li, k) => {
+		const link = li.querySelector(':scope > a');
+		const sub = li.querySelector(':scope > .sub-menu');
+		const btn = document.createElement('button');
+		sub.id ||= `ens-menu-sub-${k + 1}`;
+		btn.type = 'button';
+		btn.className = 'ens-menu__toggle';
+		btn.setAttribute('aria-expanded', 'false');
+		btn.setAttribute('aria-controls', sub.id);
+		btn.innerHTML = '<span class="screen-reader-text"></span>';
+		btn.firstChild.textContent = link.textContent;
+		link.after(btn);
+		li.classList.add('ens-menu__acc');
+		return { li, btn };
+	});
+	const expand = (target) => sections.forEach(({ li, btn }) => {
+		li.classList.toggle('is-expanded', li === target);
+		btn.setAttribute('aria-expanded', String(li === target));
+	});
+	sections.forEach(({ li, btn }) => btn.addEventListener('click', () => expand(btn.getAttribute('aria-expanded') === 'true' ? null : li)));
+	$$('.ens-menu__list > li, .ens-menu__foot').forEach((el, i) => el.style.setProperty('--i', i));
+
 	const setMenu = (open) => {
 		if (!toggle || !menu) return;
 		toggle.setAttribute('aria-expanded', String(open));
@@ -127,16 +152,47 @@
 			menu.querySelector('a')?.focus({ preventScroll: true });
 		} else {
 			menu.classList.remove('is-open');
-			const done = () => { if (!menu.classList.contains('is-open')) menu.hidden = true; };
+			const done = () => { if (!menu.classList.contains('is-open')) { menu.hidden = true; expand(null); } };
 			reduce ? done() : setTimeout(done, 500);
 		}
 	};
 	toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
 	menu?.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+
+	/* ---------- Desktop dropdowns (CSS hover/focus panels) ---------- */
+	// Stagger index; images load on a panel's first opening; Escape closes the open panel.
+	// Touch screens without hover (tablets ≥1025px): the first tap opens the panel, the second follows the link.
+	const dropdowns = $$('.ens-nav__list > .menu-item-has-children');
+	const noHover = matchMedia('(hover: none)');
+	const touchOpen = (target) => dropdowns.forEach((li) => li.classList.toggle('is-touch-open', li === target));
+	dropdowns.forEach((li) => {
+		$$(':scope > .sub-menu > li', li).forEach((item, i) => item.style.setProperty('--i', i));
+		const prime = () => li.classList.add('is-primed');
+		li.addEventListener('pointerenter', prime, { once: true });
+		li.addEventListener('focusin', prime, { once: true });
+		li.addEventListener('mouseleave', () => li.classList.remove('is-dismissed'));
+		li.addEventListener('focusout', (e) => { if (!li.contains(e.relatedTarget)) li.classList.remove('is-dismissed'); });
+		li.querySelector(':scope > a').addEventListener('click', (e) => {
+			if (!noHover.matches || li.classList.contains('is-touch-open')) return;
+			e.preventDefault();
+			prime();
+			touchOpen(li);
+		});
+	});
+	document.addEventListener('click', (e) => { if (!e.target.closest('.ens-nav__list > .menu-item-has-children')) touchOpen(null); });
+
 	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape' && root.classList.contains('ens-menu-open')) {
+		if (e.key !== 'Escape') return;
+		if (root.classList.contains('ens-menu-open')) {
 			setMenu(false);
 			toggle.focus();
+			return;
+		}
+		const open = dropdowns.find((li) => li.matches(':hover, :focus-within, .is-touch-open'));
+		if (open) {
+			touchOpen(null);
+			open.classList.add('is-dismissed');
+			if (open.contains(document.activeElement)) open.querySelector('a').focus();
 		}
 	});
 	desktop.addEventListener('change', (e) => { if (e.matches) setMenu(false); });

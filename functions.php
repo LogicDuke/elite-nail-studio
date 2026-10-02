@@ -94,6 +94,18 @@ function ens_menu_fallback() {
 	echo '</ul>';
 }
 
+/**
+ * Desktop dropdowns: each child link carries its page's featured image, shown in the panel's image
+ * column while the item is hovered or focused (main.css §4; loaded on the panel's first opening).
+ */
+add_filter( 'walker_nav_menu_start_el', function ( $output, $item, $depth, $args ) {
+	if ( 1 !== $depth || 'ens-nav__list' !== ( $args->menu_class ?? '' ) || 'post_type' !== $item->type ) {
+		return $output;
+	}
+	$img = get_post_thumbnail_id( (int) $item->object_id );
+	return $img ? $output . '<span class="ens-nav__thumb" aria-hidden="true">' . wp_get_attachment_image( $img, 'medium_large', false, [ 'alt' => '', 'loading' => 'lazy', 'sizes' => '200px' ] ) . '</span>' : $output;
+}, 10, 4 );
+
 /** Archive/blog hero image: the Journal page's featured image, else none. */
 function ens_journal_hero_id() {
 	$page = (int) get_option( 'page_for_posts' );
