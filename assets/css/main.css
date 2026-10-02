@@ -1,7 +1,7 @@
 /* Elite Nail Studio — components. Every colour is a token: role tokens (--ens-bg, --ens-text, …)
  * follow the section's tone; raw palette tokens only on photography and dark chrome.
  * Sections: 1 Base · 2 Elementor bridge · 3 Buttons & links · 4 Header · 5 Menu · 6 Footer
- * 7 Hero · 8 Shared blocks · 9 Widgets · 10 Journal · 11 Motion · 12 Responsive */
+ * 7 Hero · 8 Shared blocks · 9 Widgets · 10 Journal · 11 Motion · 13 Consent · 12 Responsive */
 
 /* ==========================================================================
    1. Base
@@ -374,7 +374,7 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 	letter-spacing: .04em;
 }
 .ens-footer__legal p { margin: 0; }
-.ens-footer__menu { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; }
+.ens-footer__menu { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; list-style: none; }
 .ens-wordmark .elementor-heading-title { font: 300 clamp(3rem, 1rem + 9vw, 10rem)/.9 var(--ens-font-display); letter-spacing: .02em; text-transform: uppercase; color: var(--ens-on-dark); white-space: nowrap; }
 
 /* ==========================================================================
@@ -818,6 +818,69 @@ body:not(.ens-has-hero) .ens-main { padding-top: calc(var(--ens-header-h) + var(
 	.ens-marquee__group { flex-wrap: wrap; justify-content: center; padding-inline: var(--ens-gutter); }
 	.ens-hero__cue::after, .ens-faq__item::details-content { animation: none; transition: none; }
 	.ens-story__frame, .ens-story__frame img, .ens-menu { transition: none; }
+}
+
+/* ==========================================================================
+   13. Consent (inc/consent.php) — banner, preferences dialog, language placeholder
+   ========================================================================== */
+.ens-consent {
+	position: fixed;
+	z-index: 10000;
+	left: var(--ens-gutter);
+	bottom: var(--ens-gutter);
+	width: min(100% - 2 * var(--ens-gutter), 560px);
+	padding: 28px 32px 26px;
+	border: 1px solid var(--ens-line);
+	background: var(--ens-surface);
+	color: var(--ens-text);
+	box-shadow: var(--ens-shadow-float);
+}
+.ens-consent__title { margin: 0 0 10px; font-size: var(--ens-fs-h4); }
+.ens-consent__text { margin: 0 0 12px; font-size: var(--ens-fs-small); line-height: 1.6; color: var(--ens-text-muted); }
+.ens-consent__links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 20px; font-size: var(--ens-fs-small); }
+.ens-consent__links a { color: var(--ens-text); text-decoration: underline; text-underline-offset: .2em; }
+.ens-consent__links a:hover { color: var(--ens-accent-ink); }
+.ens-consent__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.ens-consent__actions .ens-btn { flex: 1 1 11rem; }
+.ens-consent__manage,
+.ens-consent-panel__close,
+.ens-consent-lang { border: 0; background: none; color: inherit; cursor: pointer; }
+.ens-consent__manage { padding: 12px 4px; font: 500 var(--ens-fs-label)/1.4 var(--ens-font-body); letter-spacing: .16em; text-transform: uppercase; text-decoration: underline; text-underline-offset: .35em; }
+:is(.ens-consent__manage, .ens-consent-panel__close):is(:hover, :focus) { background: none; color: var(--ens-accent-ink); }
+
+.ens-consent-panel {
+	width: min(100% - 32px, 600px);
+	max-height: min(100% - 32px, 780px);
+	padding: clamp(28px, 4vw, 44px);
+	border: 1px solid var(--ens-line);
+	background: var(--ens-surface);
+	color: var(--ens-text);
+	box-shadow: var(--ens-shadow-float);
+	overflow: auto;
+	overscroll-behavior: contain;
+}
+.ens-consent-panel::backdrop { background: color-mix(in srgb, var(--ens-espresso, #271D1B) 45%, transparent); }
+.ens-consent-panel .ens-consent__title { font-size: var(--ens-fs-h3); padding-right: 40px; }
+.ens-consent-panel__close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; padding: 0; font: 300 1.9rem/1 var(--ens-font-display); }
+.ens-consent__categories { margin: 8px 0 20px; padding: 0; list-style: none; }
+.ens-consent__category { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 20px; padding: 18px 0; border-top: 1px solid var(--ens-line); }
+.ens-consent__category:last-child { border-bottom: 1px solid var(--ens-line); }
+.ens-consent__category-title { margin: 0 0 6px; font-size: 1.3rem; }
+.ens-consent__category-title label { cursor: pointer; }
+.ens-consent__category-text { margin: 0; font-size: var(--ens-fs-small); line-height: 1.6; color: var(--ens-text-muted); }
+.ens-consent__switch { appearance: none; position: relative; flex: none; width: 46px; height: 26px; margin: 4px 0 0; border: 1px solid var(--ens-line-strong); border-radius: var(--ens-radius-pill); background: transparent; cursor: pointer; transition: background-color var(--ens-dur-1); }
+.ens-consent__switch::before { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--ens-text-muted); transition: transform var(--ens-dur-1) var(--ens-ease); }
+.ens-consent__switch:checked { border-color: var(--ens-strong); background: var(--ens-strong); }
+.ens-consent__switch:checked::before { background: var(--ens-on-strong); transform: translateX(20px); }
+.ens-consent__switch:disabled { cursor: default; opacity: .6; }
+
+.ens-consent-lang { padding: 0; font: inherit; letter-spacing: inherit; text-decoration: none; }
+.ens-consent-lang:is(:hover, :focus) { background: none; color: var(--ens-rose-glow); }
+
+@media (max-width: 767px) {
+	.ens-consent { left: 12px; bottom: 12px; width: calc(100% - 24px); max-height: calc(100svh - 24px); padding: 22px 20px 18px; overflow: auto; }
+	.ens-consent__actions .ens-btn { flex-basis: 100%; }
+	.ens-consent__manage { width: 100%; }
 }
 
 /* ==========================================================================

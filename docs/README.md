@@ -160,6 +160,16 @@ Siblings are removed with their attachment. For media imported before the theme 
 `wp ens webp` (add `--force` to rebuild). Sizes: core sizes plus `ens-card` (900×1125, portrait and
 square sources only); hero and CTA sources stay at their full 2880 px because portrait cover crops need it.
 
+**Consent (`inc/consent.php`, `assets/js/consent.js`):** two categories, Necessary (always on) and
+Preferences (translation). GTranslate's scripts are printed inert and start only after a visitor allows
+Preferences, so nothing reaches GTranslate or Google before that. The choice is kept in the visitor's
+browser, `localStorage['eds-consent:elite-nail-studio']` =
+`{"v":1,"policy":"1","ts":<unix seconds>,"cats":{"preferences":true|false}}`, and asked again after 180
+days or when `ens_consent_policy_version` changes. No server calls, so it works on a static export.
+Any link to `#eds-consent` (footer: *Cookie preferences*) reopens the panel. Legal pages are block
+content seeded from `demo/legal-notice.html`, `demo/privacy-notice.html` and `demo/cookie-policy.html`;
+a new optional service must be gated the same way and listed in the Cookie Policy.
+
 ---
 
 ## 7. Team development

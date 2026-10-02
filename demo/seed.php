@@ -58,6 +58,11 @@ class ENS_Seed {
 			'post_content' => (string) file_get_contents( __DIR__ . '/legal-notice.html' ),
 		] );
 
+		// Cookie policy: plain block content, from demo/cookie-policy.html (consent layer: inc/consent.php).
+		$ids['cookie-policy'] = $this->save( 'page', 'cookie-policy', 'Cookie Policy', null, [
+			'post_content' => (string) file_get_contents( __DIR__ . '/cookie-policy.html' ),
+		] );
+
 		$this->save( 'elementor_library', 'ens-footer', 'Global Footer', $this->footer() );
 		$this->save( 'elementor_library', 'ens-404', '404 Page', $this->not_found() );
 
@@ -1011,7 +1016,10 @@ class ENS_Seed {
 				wp_delete_post( $old->ID, true );
 			}
 			foreach ( $items as [ $title, $page, $children ] ) {
-				$parent = wp_update_nav_menu_item( $id, 0, [ 'menu-item-title' => $title, 'menu-item-object' => 'page', 'menu-item-object-id' => $page, 'menu-item-type' => 'post_type', 'menu-item-status' => 'publish' ] );
+				$target = is_string( $page ) // A string is a custom link (e.g. '#eds-consent'), an id a page.
+					? [ 'menu-item-type' => 'custom', 'menu-item-url' => $page ]
+					: [ 'menu-item-object' => 'page', 'menu-item-object-id' => $page, 'menu-item-type' => 'post_type' ];
+				$parent = wp_update_nav_menu_item( $id, 0, [ 'menu-item-title' => $title, 'menu-item-status' => 'publish' ] + $target );
 				foreach ( $children as [ $ct, $cp ] ) {
 					wp_update_nav_menu_item( $id, 0, [ 'menu-item-title' => $ct, 'menu-item-object' => 'page', 'menu-item-object-id' => $cp, 'menu-item-type' => 'post_type', 'menu-item-parent-id' => $parent, 'menu-item-status' => 'publish' ] );
 				}
@@ -1033,7 +1041,7 @@ class ENS_Seed {
 			// Privacy notice: plain block content (editable in WordPress), from demo/privacy-notice.html.
 			wp_update_post( wp_slash( [ 'ID' => $privacy, 'post_status' => 'publish', 'post_title' => 'Privacy Notice', 'post_content' => (string) file_get_contents( __DIR__ . '/privacy-notice.html' ) ] ) );
 		}
-		$make( 'Footer legal', 'footer', array_filter( [ $privacy ? [ 'Privacy', $privacy, [] ] : null, [ 'FAQ', $ids['faq'], [] ], [ 'Contact', $ids['contact'], [] ], [ 'Legal notice', $ids['legal-notice'], [] ] ] ) );
+		$make( 'Footer legal', 'footer', array_filter( [ $privacy ? [ 'Privacy', $privacy, [] ] : null, [ 'FAQ', $ids['faq'], [] ], [ 'Contact', $ids['contact'], [] ], [ 'Legal notice', $ids['legal-notice'], [] ], [ 'Cookie policy', $ids['cookie-policy'], [] ], [ 'Cookie preferences', '#eds-consent', [] ] ] ) );
 	}
 
 	private function settings( array $ids ) {
