@@ -115,6 +115,14 @@ Full model, gates and commands: design-system.md §2.
 **New palette:** add it to `bin/palette-sources.json`, run `php bin/palette-build.php`, then
 `php bin/contrast-gate.php`.
 
+**Demo palette switcher (EDS demo sites only):** install the separate plugin
+[eds-demo-palette-switcher](https://github.com/LogicDuke/eds-demo-palette-switcher) (not part of this
+repository), activate it, then enable **Settings → General → Demo Palette Switcher**. The theme
+registers all 44 palettes with it automatically (`inc/demo-palette-switcher.php`, integration ID
+`elite-nail-studio`, default = the saved palette); visitors' choices stay in their own browser
+(`localStorage`), so it works on a static export. Leave it off (or uninstalled) on client sites; the
+theme renders identically without it.
+
 ---
 
 ## 4. Motion & accessibility
