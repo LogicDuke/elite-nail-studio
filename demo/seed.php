@@ -1051,6 +1051,77 @@ class ENS_Seed {
 		update_option( 'page_on_front', $ids['home'] );
 		update_option( 'page_for_posts', $ids['journal'] );
 		update_option( 'posts_per_page', 9 );
+		$this->seo();
+	}
+
+	/**
+	 * Page descriptions (excerpts), social images (featured images) and the site icon (inc/seo.php).
+	 * Part of `seed`; run alone on an existing install: `wp ens seo`.
+	 */
+	public function seo() {
+		$pages = [
+			'home'                         => [ 'home-hero', 'An appointment-only nail atelier for manicure, gel couture and nail art — unhurried, meticulous and entirely yours.' ],
+			'about'                        => [ 'about-hero', 'The story of Maison Élise: a small, appointment-only atelier where every manicure is given the time it deserves.' ],
+			'services'                     => [ 'services-hero', 'Six treatments for hands and feet, each beginning with a consultation: manicure, gel, nail art, extensions, pedicure and hand ritual.' ],
+			'services/signature-manicure'  => [ 'service-manicure', 'Our foundation treatment: meticulous preparation, a balanced shape and a flawless lacquer finish, closed with a warm-oil hand massage.' ],
+			'services/gel-couture'         => [ 'service-gel', 'Long-wear gel colour with a mirror-gloss finish, applied with a HEMA-free system and removed with the same care.' ],
+			'services/nail-art-atelier'    => [ 'service-art', 'Hand-painted nail art, from a single accent to a full editorial set: chrome, fine lines and freehand detail, never stamped.' ],
+			'services/sculpted-extensions' => [ 'service-extensions', 'Builder-gel extensions sculpted on a form to the length and shape that suit your hand — light as a natural nail.' ],
+			'services/spa-pedicure'        => [ 'service-pedicure', 'An unhurried pedicure with a warm mineral soak, gentle callus care, polish and a long lower-leg massage.' ],
+			'services/hand-ritual'         => [ 'service-ritual', 'A polish-free treatment for hard-working hands: enzyme exfoliation, a warm paraffin wrap and a slow lymphatic massage.' ],
+			'pricing'                      => [ 'pricing-hero', 'Prices for every Maison Élise treatment, with consultation, removal of previous lacquer and a take-home cuticle oil included.' ],
+			'lookbook'                     => [ 'gallery-hero', 'A living archive of recent sets from the atelier. Browse by style, open any look larger and bring it to your consultation.' ],
+			'artists'                      => [ 'team-hero', 'Meet the artists of Maison Élise and request the specialist for your treatment when you book.' ],
+			'booking'                      => [ 'booking-hero', 'Request an appointment at Maison Élise: choose your treatment, a preferred time and, if you like, your artist.' ],
+			'faq'                          => [ 'faq-hero', 'Answers to common questions about booking, treatments and aftercare at Maison Élise.' ],
+			'contact'                      => [ 'contact-hero', 'How to find and contact Maison Élise, with opening hours and a short message form.' ],
+			'journal'                      => [ 'journal-hero', 'Notes on colour, care and craft from the Maison Élise atelier.' ],
+			'legal-notice'                 => [ '', 'Legal information about this website: who publishes it, intellectual property and liability.' ],
+			'privacy-policy'               => [ '', 'How this website handles the personal information sent through its forms, and the choices you have.' ],
+			'cookie-policy'                => [ '', 'The cookies and browser storage this website uses, why it uses them and how to change your preferences.' ],
+		];
+		foreach ( $pages as $path => [ $img, $desc ] ) {
+			$page = get_page_by_path( $path );
+			if ( ! $page ) {
+				WP_CLI::warning( "Page {$path} not found." );
+				continue;
+			}
+			wp_update_post( wp_slash( [ 'ID' => $page->ID, 'post_excerpt' => $desc ] ) );
+			$id = $img ? $this->attachment( $img ) : 0;
+			if ( $id ) {
+				set_post_thumbnail( $page->ID, $id );
+			}
+		}
+
+		// Site icon: the wordmark initial in the display face, ivory on espresso (assets/img/site-icon.png).
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/class-wp-site-icon.php';
+		$icon = $this->attachment( 'site-icon' );
+		if ( ! $icon ) {
+			$tmp = wp_tempnam( 'ens-site-icon' );
+			copy( ENS_DIR . '/assets/img/site-icon.png', $tmp );
+			$icon = media_handle_sideload( [ 'name' => 'ens-site-icon.png', 'tmp_name' => $tmp ], 0, get_bloginfo( 'name' ) );
+			if ( is_wp_error( $icon ) ) {
+				WP_CLI::error( $icon->get_error_message() );
+			}
+			wp_update_post( [ 'ID' => $icon, 'post_name' => 'ens-site-icon' ] );
+			update_post_meta( $icon, '_wp_attachment_context', 'site-icon' );
+			// The 32/180/192/270 px sizes WordPress uses for icons, as the Customizer crop would make.
+			$site_icon = new WP_Site_Icon();
+			add_filter( 'intermediate_image_sizes_advanced', [ $site_icon, 'additional_sizes' ] );
+			wp_update_attachment_metadata( $icon, wp_generate_attachment_metadata( $icon, get_attached_file( $icon ) ) );
+			remove_filter( 'intermediate_image_sizes_advanced', [ $site_icon, 'additional_sizes' ] );
+		}
+		update_option( 'site_icon', $icon );
+		WP_CLI::success( 'Descriptions, social images and site icon set.' );
+	}
+
+	/** Attachment id of demo image `ens-<slot>`, 0 if missing. */
+	private function attachment( $slot ) {
+		$ids = get_posts( [ 'post_type' => 'attachment', 'name' => 'ens-' . $slot, 'posts_per_page' => 1, 'fields' => 'ids', 'post_status' => 'inherit' ] );
+		return $ids[0] ?? 0;
 	}
 }
 

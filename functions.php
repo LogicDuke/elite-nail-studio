@@ -19,6 +19,7 @@ require ENS_DIR . '/inc/options.php';
 require ENS_DIR . '/inc/webp.php';
 require ENS_DIR . '/inc/consent.php';
 require ENS_DIR . '/inc/forms.php';
+require ENS_DIR . '/inc/seo.php';
 require ENS_DIR . '/inc/elementor.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {

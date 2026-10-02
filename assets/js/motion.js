@@ -12,6 +12,39 @@
 	const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 	const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
+	/* ---------- Brand name: never machine-translated ("Maison Élise" ≠ "Huis Élise") ---------- */
+	// Runs before GTranslate can start (its scripts load only after consent, from the network).
+	// Neighbouring spaces and a closing punctuation mark go inside the span: translation trims them
+	// from the text around it.
+	const brand = root.dataset.ensBrand;
+	if (brand) {
+		const hits = [];
+		const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+		while (tw.nextNode()) {
+			const n = tw.currentNode;
+			if (n.data.includes(brand) && !n.parentElement.closest('script, style, .notranslate')) hits.push(n);
+		}
+		const re = new RegExp(`(\\s*${brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[.,;:!?]?\\s*)`);
+		hits.forEach((n) => {
+			const svg = n.parentElement.closest('svg'); // e.g. the circular badge text: needs <tspan>.
+			const parts = n.data.split(re).map((part, i) => {
+				if (i % 2 === 0) return part;
+				const name = svg ? document.createElementNS(svg.namespaceURI, 'tspan') : document.createElement('span');
+				name.setAttribute('class', 'notranslate');
+				name.setAttribute('translate', 'no');
+				name.textContent = part;
+				return name;
+			});
+			if (!svg && /flex|grid/.test(getComputedStyle(n.parentElement).display)) {
+				const item = document.createElement('span'); // One flex/grid item, as the text was (e.g. eyebrow gap).
+				item.append(...parts);
+				n.replaceWith(item);
+			} else {
+				n.replaceWith(...parts);
+			}
+		});
+	}
+
 	/* ---------- Split text: wrap words (keeps <em>/<br>/links) ---------- */
 	const splitWords = (el) => {
 		let i = 0;

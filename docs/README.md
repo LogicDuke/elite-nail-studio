@@ -23,6 +23,7 @@ Hello Elementor (parent, untouched)
     ├── inc/demo-palette-switcher.php  registers palettes with the optional EDS Demo Palette Switcher
     ├── inc/options.php         Customizer "Studio Details", icons, badge + template helpers
     ├── inc/forms.php           form handler (booking, quick booking, contact, newsletter)
+    ├── inc/seo.php             descriptions, Open Graph/X cards, canonicals, author archives off
     ├── inc/elementor.php       widget category, self-hosted font group, widget auto-registration
     ├── inc/widgets/            15 "ENS" Elementor widgets (one class per file)
     ├── assets/css/tokens.css   design tokens (Atelier fallbacks, type, space, motion)
@@ -30,6 +31,8 @@ Hello Elementor (parent, untouched)
     ├── assets/css/main.css     all components (sections numbered in the header comment)
     ├── assets/js/motion.js     motion + interaction engine (vanilla, ~9 KB)
     ├── assets/fonts/           Cormorant Garamond + Jost variable woff2 (OFL)
+    ├── assets/img/site-icon.png  site icon source (512 px), installed by `wp ens seo`
+    ├── cloudflare/             Pages Function for forms, static-export finalizer (+ tests)
     └── demo/                   seed command, image slot registry, placeholder generator
 ```
 
@@ -163,6 +166,11 @@ square sources only); hero and CTA sources stay at their full 2880 px because po
 **Forms on a static export:** the four ENS forms post to `admin-post.php` in WordPress and to a
 Cloudflare Pages Function (`cloudflare/functions/api/form.js`) after a Simply Static export; the
 switch happens automatically during the export. Configuration and deployment: `docs/static-forms.md`.
+
+**SEO and social metadata (`inc/seo.php`):** descriptions from page excerpts, Open Graph/X cards from
+featured images, site icon, author archives off, brand name kept out of machine translation. After a
+static export, `cloudflare/finalize.mjs` sets the public origin and writes `sitemap.xml`, `robots.txt`
+and `favicon.ico`: `docs/static-seo.md`.
 
 **Consent (`inc/consent.php`, `assets/js/consent.js`):** two categories, Necessary (always on) and
 Preferences (translation). GTranslate's scripts are printed inert and start only after a visitor allows
