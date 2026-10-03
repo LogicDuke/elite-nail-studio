@@ -32,6 +32,12 @@ add_filter( 'hello_elementor_header_footer', '__return_false' );
 add_filter( 'hello_elementor_page_title', '__return_false' );
 add_filter( 'hello_elementor_description_meta_tag', '__return_false' );
 
+// Simply Static: inline styles have their own url() pass; as a plain URL attribute too, a value like
+// "--ens-cols:3" is taken for a relative path and exported as "--ens-cols:3/" (invalid, layout lost).
+add_filter( 'ss_match_tags', function ( $tags ) {
+	return array_map( fn( $attrs ) => array_values( array_diff( (array) $attrs, [ 'style' ] ) ), (array) $tags );
+} );
+
 add_action( 'after_setup_theme', function () {
 	register_nav_menus( [
 		'menu-1' => __( 'Primary', 'elite-nail-studio' ),
